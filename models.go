@@ -23,7 +23,7 @@ type errorReply struct {
 type GetBalanceQuery struct {
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 	Card        string `json:"card,omitempty"`
-	ExternalId  string `json:"externalId,omitempty"`
+	ExternalID  string `json:"externalId,omitempty"`
 }
 
 type GetBalanceReply struct {
@@ -34,7 +34,7 @@ type GetBalanceReply struct {
 type GetBalanceReplyClient struct {
 	PhoneNumber       string            `json:"phoneNumber"`
 	CardString        string            `json:"cardString"`
-	ExternalId        string            `json:"externalId"`
+	ExternalID        string            `json:"externalId"`
 	Surname           string            `json:"surname"`
 	Name              string            `json:"name"`
 	PatronymicName    string            `json:"patronymicName"`
@@ -55,6 +55,48 @@ type GetBalanceReplyBonus struct {
 	Amount   int    `json:"amount"`
 }
 
+// new-client
+
+type NewClientQuery struct {
+	Client NewClientClient `json:"client"`
+}
+
+type NewClientClient struct {
+	PhoneNumber       string            `json:"phoneNumber,omitempty"`
+	CardString        string            `json:"cardString,omitempty"`
+	ExternalID        string            `json:"externalId,omitempty"`
+	Surname           string            `json:"surname,omitempty"`
+	Name              string            `json:"name,omitempty"`
+	PatronymicName    string            `json:"patronymicName,omitempty"`
+	FullName          string            `json:"fullName,omitempty"`
+	Gender            int               `json:"gender,omitempty"`
+	Birthdate         string            `json:"birthdate,omitempty"`
+	Email             string            `json:"email,omitempty"`
+	Level             int               `json:"level,omitempty"`
+	IsEmailSubscribed bool              `json:"isEmailSubscribed"`
+	IsPhoneSubscribed bool              `json:"isPhoneSubscribed"`
+	ExtraFields       map[string]string `json:"extraFields,omitempty"`
+}
+
+type NewClientReply struct {
+	Client  GetBalanceReplyClient  `json:"client"`
+	Bonuses []GetBalanceReplyBonus `json:"bonuses"`
+}
+
+// update-client
+
+type UpdateClientQuery struct {
+	PhoneNumber string          `json:"phoneNumber,omitempty"`
+	Card        string          `json:"card,omitempty"`
+	ExternalID  string          `json:"externalId,omitempty"`
+	Client      NewClientClient `json:"client"`
+}
+
+type UpdateClientReply struct {
+	Client  GetBalanceReplyClient  `json:"client"`
+	Bonuses []GetBalanceReplyBonus `json:"bonuses"`
+}
+
 // calculate-purchase
 
 type CalculatePurchaseQuery struct {
@@ -64,7 +106,7 @@ type CalculatePurchaseQuery struct {
 type CalculatePurchaseQueryCalculate struct {
 	PhoneNumber       string          `json:"phoneNumber,omitempty"`
 	Card              string          `json:"card,omitempty"`
-	ExternalId        string          `json:"externalId,omitempty"`
+	ExternalID        string          `json:"externalId,omitempty"`
 	IsAnonymousClient bool            `json:"isAnonymousClient,omitempty"`
 	LoyaltyAction     string          `json:"loyaltyAction,omitempty"`
 	TotalAmount       float64         `json:"totalAmount"`
@@ -74,6 +116,7 @@ type CalculatePurchaseQueryCalculate struct {
 	CollectBonuses    int             `json:"collectBonuses,omitempty"`
 	Promocode         string          `json:"promocode,omitempty"`
 	Units             map[string]Unit `json:"units,omitempty"`
+	OrderID           string          `json:"orderId,omitempty"`
 }
 
 type Unit struct {
@@ -88,6 +131,7 @@ type Unit struct {
 type CalculatePurchaseReply struct {
 	Calculation     CalculatePurchaseReplyCalculate `json:"calculation"`
 	CalculatedUnits map[string]CalculatedUnit       `json:"calculatedUnits"`
+	ClientBonuses   ClientBonusesReply              `json:"clientBonuses"`
 }
 
 type CalculatedUnit struct {
@@ -115,22 +159,33 @@ type ApplyPurchaseQuery struct {
 }
 
 type ApplyPurchaseTransaction struct {
-	PhoneNumber       string  `json:"phoneNumber,omitempty"`
-	Card              string  `json:"card,omitempty"`
-	IsAnonymousClient bool    `json:"isAnonymousClient,omitempty"`
-	ID                string  `json:"id"`
-	ExecutedAt        string  `json:"executedAt"`
-	ReceiptID         string  `json:"receiptId,omitempty"`
-	SessionID         string  `json:"sessionId,omitempty"`
-	ShopCode          string  `json:"shopCode"`
-	ShopName          string  `json:"shopName"`
-	Cashier           string  `json:"cashier,omitempty"`
-	CashierID         string  `json:"cashierId,omitempty"`
-	LoyaltyAction     string  `json:"loyaltyAction"`
-	TotalAmount       float64 `json:"totalAmount"`
-	ApplyBonuses      int     `json:"applyBonuses"`
-	CollectBonuses    int     `json:"collectBonuses,omitempty"`
-	Items             []Item  `json:"items,omitempty"`
+	PhoneNumber                string                             `json:"phoneNumber,omitempty"`
+	Card                       string                             `json:"card,omitempty"`
+	ExternalID                 string                             `json:"externalId,omitempty"`
+	IsAnonymousClient          bool                               `json:"isAnonymousClient,omitempty"`
+	ID                         string                             `json:"id"`
+	ExecutedAt                 string                             `json:"executedAt"`
+	ReceiptID                  string                             `json:"receiptId,omitempty"`
+	SessionID                  string                             `json:"sessionId,omitempty"`
+	ShopCode                   string                             `json:"shopCode"`
+	ShopName                   string                             `json:"shopName"`
+	Cashier                    string                             `json:"cashier,omitempty"`
+	CashierID                  string                             `json:"cashierId,omitempty"`
+	LoyaltyAction              string                             `json:"loyaltyAction"`
+	TotalAmount                float64                            `json:"totalAmount"`
+	ApplyingAmount             float64                            `json:"applyingAmount,omitempty"`
+	CollectingAmount           float64                            `json:"collectingAmount,omitempty"`
+	ApplyBonuses               int                                `json:"applyBonuses"`
+	CollectBonuses             int                                `json:"collectBonuses,omitempty"`
+	Promocode                  *ApplyPurchaseTransactionPromocode `json:"promocode,omitempty"`
+	Items                      []Item                             `json:"items,omitempty"`
+	IsConfirmationCodeRequired bool                               `json:"isConfirmationCodeRequired,omitempty"`
+	ConfirmationCode           string                             `json:"confirmationCode,omitempty"`
+}
+
+type ApplyPurchaseTransactionPromocode struct {
+	Promocode         string  `json:"promocode"`
+	PromocodeDiscount float64 `json:"promocodeDiscount"`
 }
 
 type ApplyPurchaseReply struct {
@@ -152,6 +207,29 @@ type ApplyPurchaseReplyBonuses struct {
 	Available int `json:"available"`
 }
 
+// calculate-return
+
+type CalculateReturnQuery struct {
+	Calculate CalculateReturnQueryCalculate `json:"calculate"`
+}
+
+type CalculateReturnQueryCalculate struct {
+	PhoneNumber  string  `json:"phoneNumber,omitempty"`
+	Card         string  `json:"card,omitempty"`
+	ExternalID   string  `json:"externalId,omitempty"`
+	PurchaseID   string  `json:"purchaseId"`
+	RefundAmount float64 `json:"refundAmount"`
+}
+
+type CalculateReturnReply struct {
+	Calculation CalculateReturnReplyCalculate `json:"calculation"`
+}
+
+type CalculateReturnReplyCalculate struct {
+	RecoveredBonuses int `json:"recoveredBonuses"`
+	CancelledBonuses int `json:"cancelledBonuses"`
+}
+
 // apply-return
 
 type ApplyReturnQuery struct {
@@ -161,6 +239,7 @@ type ApplyReturnQuery struct {
 type ApplyReturnTransaction struct {
 	PhoneNumber       string  `json:"phoneNumber,omitempty"`
 	Card              string  `json:"card,omitempty"`
+	ExternalID        string  `json:"externalId,omitempty"`
 	IsAnonymousClient bool    `json:"isAnonymousClient,omitempty"`
 	ID                string  `json:"id"`
 	ExecutedAt        string  `json:"executedAt"`
@@ -188,11 +267,104 @@ type ApplyReturnReplyConfirmation struct {
 }
 
 type Item struct {
-	Sku         string  `json:"sku"`
+	SKU         string  `json:"sku"`
 	ItemTitle   string  `json:"itemTitle"`
 	ItemCount   float64 `json:"itemCount"`
 	BuyingPrice float64 `json:"buyingPrice,omitempty"`
 	Price       float64 `json:"price"`
 	Amount      float64 `json:"amount,omitempty"`
 	Category    string  `json:"category,omitempty"`
+}
+
+// adjust-balance
+
+type AdjustBalanceQuery struct {
+	Client            ClientQuery            `json:"client"`
+	BalanceAdjustment BalanceAdjustmentQuery `json:"balanceAdjustment"`
+}
+
+type ClientQuery struct {
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	Card        string `json:"card,omitempty"`
+	ExternalID  string `json:"externalId,omitempty"`
+}
+
+type BalanceAdjustmentQuery struct {
+	AmountDelta          int    `json:"amountDelta"`
+	ExpirationPeriodDays int    `json:"expirationPeriodDays,omitempty"`
+	Comment              string `json:"comment,omitempty"`
+	Notify               bool   `json:"notify,omitempty"`
+}
+
+type AdjustBalanceReply struct {
+	ClientBonuses ClientBonusesReply `json:"clientBonuses"`
+}
+
+type ClientBonusesReply struct {
+	Available int `json:"available"`
+	Pending   int `json:"pending"`
+	Reserved  int `json:"reserved"`
+}
+
+// set-order
+
+type SetOrderQuery struct {
+	Client ClientQuery `json:"client"`
+	Order  OrderQuery  `json:"order"`
+}
+
+type OrderQuery struct {
+	ID          string           `json:"id"`
+	ExecutedAt  string           `json:"executedAt,omitempty"`
+	ShopCode    string           `json:"shopCode"`
+	ShopName    string           `json:"shopName"`
+	TotalAmount float64          `json:"totalAmount"`
+	Loyalty     *SetOrderLoyalty `json:"loyalty,omitempty"`
+	Promocode   string           `json:"promocode,omitempty"`
+	Items       []Item           `json:"items,omitempty"`
+}
+
+type SetOrderLoyalty struct {
+	Action                     string  `json:"action"`
+	ApplyingAmount             float64 `json:"applyingAmount,omitempty"`
+	CollectingAmount           float64 `json:"collectingAmount,omitempty"`
+	ApplyBonuses               int     `json:"applyBonuses"`
+	CollectBonuses             int     `json:"collectBonuses,omitempty"`
+	IsConfirmationCodeRequired bool    `json:"isConfirmationCodeRequired,omitempty"`
+	ConfirmationCode           string  `json:"confirmationCode,omitempty"`
+}
+
+type SetOrderReply struct {
+	OperationResult SetOrderOperationResult `json:"operationResult"`
+	ClientBonuses   ClientBonusesReply      `json:"clientBonuses"`
+}
+
+type SetOrderOperationResult struct {
+	AppliedBonuses   int     `json:"appliedBonuses"`
+	CollectedBonuses int     `json:"collectedBonuses"`
+	RemainingAmount  float64 `json:"remainingDiscount"`
+}
+
+// confirm-order
+
+type ConfirmOrderQuery struct {
+	OrderID    string `json:"orderId"`
+	ExecutedAt string `json:"executedAt,omitempty"`
+}
+
+type ConfirmOrderReply struct {
+	OperationResult SetOrderOperationResult `json:"operationResult"`
+	ClientBonuses   ClientBonusesReply      `json:"clientBonuses"`
+}
+
+// cancel-order
+
+type CancelOrderQuery struct {
+	OrderID    string `json:"orderId"`
+	ExecutedAt string `json:"executedAt,omitempty"`
+}
+
+type CancelOrderReply struct {
+	OperationResult SetOrderOperationResult `json:"operationResult"`
+	ClientBonuses   ClientBonusesReply      `json:"clientBonuses"`
 }

@@ -11,9 +11,7 @@ import (
 	"strings"
 )
 
-const (
-	ContextValueXProcessingKey = "X-Processing-Key"
-)
+const ContextValueXProcessingKey = "X-Processing-Key"
 
 const contentType = "application/json"
 
@@ -21,6 +19,8 @@ type Config struct {
 	HttpClient    *http.Client
 	BaseURL       string
 	ProcessingKey string
+	OnQuery       func(req *http.Request, body []byte)
+	OnReply       func(res *http.Response, body []byte)
 }
 
 type ProcessingError struct {
@@ -28,13 +28,31 @@ type ProcessingError struct {
 	Code int
 }
 
+type ClientInterface interface {
+	GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBalanceReply, error)
+	NewClient(ctx context.Context, req *NewClientQuery) (*NewClientReply, error)
+	UpdateClient(ctx context.Context, req *UpdateClientQuery) (*UpdateClientReply, error)
+	CalculatePurchase(ctx context.Context, req *CalculatePurchaseQuery) (*CalculatePurchaseReply, error)
+	ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*ApplyPurchaseReply, error)
+	CalculateReturn(ctx context.Context, req *CalculateReturnQuery) (*CalculateReturnReply, error)
+	ApplyReturn(ctx context.Context, req *ApplyReturnQuery) (*ApplyReturnReply, error)
+	SetOrder(ctx context.Context, req *SetOrderQuery) (*SetOrderReply, error)
+	ConfirmOrder(ctx context.Context, req *ConfirmOrderQuery) (*ConfirmOrderReply, error)
+	CancelOrder(ctx context.Context, req *CancelOrderQuery) (*CancelOrderReply, error)
+	AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*AdjustBalanceReply, error)
+}
+
 type Client struct {
+	ClientInterface
+
 	httpClient    *http.Client
 	baseURL       string
 	processingKey string
+	onQuery       func(req *http.Request, body []byte)
+	onReply       func(res *http.Response, body []byte)
 }
 
-func New(config *Config) *Client {
+func New(config *Config) ClientInterface {
 	httpClient := config.HttpClient
 	if httpClient == nil {
 		httpClient = &http.Client{}
@@ -43,6 +61,8 @@ func New(config *Config) *Client {
 		httpClient:    httpClient,
 		baseURL:       strings.TrimRight(config.BaseURL, "/"),
 		processingKey: config.ProcessingKey,
+		onQuery:       config.OnQuery,
+		onReply:       config.OnReply,
 	}
 }
 
@@ -51,27 +71,42 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 	if err != nil {
 		return nil, err
 	}
+
 	httpReq, err := http.NewRequest("POST", c.baseURL+path, bytes.NewReader(reqBody))
 	if err != nil {
 		return nil, err
 	}
+
 	httpReq.Header.Set("Content-Type", contentType)
 	httpReq.Header.Set("X-Processing-Key", eitherKeyValue(ctx, c.processingKey))
+
+	if c.onQuery != nil {
+		c.onQuery(httpReq, reqBody)
+	}
+
 	resp, err := c.httpClient.Do(httpReq)
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("http error code=%d", resp.StatusCode)
-	}
+
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
+
+	if c.onReply != nil {
+		c.onReply(resp, respBody)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("http error code=%d", resp.StatusCode)
+	}
+
 	var serverError errorReply
 	if err = json.Unmarshal(respBody, &serverError); err != nil {
 		return nil, err
 	}
+
 	if serverError.ErrorCode > 0 {
 		return nil, &ProcessingError{
 			error: errors.New(serverError.Description),
@@ -87,6 +122,30 @@ func (c *Client) GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBala
 		return nil, err
 	}
 	var resp GetBalanceReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) NewClient(ctx context.Context, req *NewClientQuery) (*NewClientReply, error) {
+	respBody, err := c.request(ctx, "/new-client", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp NewClientReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) UpdateClient(ctx context.Context, req *UpdateClientQuery) (*UpdateClientReply, error) {
+	respBody, err := c.request(ctx, "/update-client", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp UpdateClientReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}
@@ -117,12 +176,72 @@ func (c *Client) ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*A
 	return &resp, nil
 }
 
+func (c *Client) CalculateReturn(ctx context.Context, req *CalculateReturnQuery) (*CalculateReturnReply, error) {
+	respBody, err := c.request(ctx, "/calculate-return", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp CalculateReturnReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
 func (c *Client) ApplyReturn(ctx context.Context, req *ApplyReturnQuery) (*ApplyReturnReply, error) {
 	respBody, err := c.request(ctx, "/apply-return", req)
 	if err != nil {
 		return nil, err
 	}
 	var resp ApplyReturnReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) SetOrder(ctx context.Context, req *SetOrderQuery) (*SetOrderReply, error) {
+	respBody, err := c.request(ctx, "/set-order", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp SetOrderReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) ConfirmOrder(ctx context.Context, req *ConfirmOrderQuery) (*ConfirmOrderReply, error) {
+	respBody, err := c.request(ctx, "/confirm-order", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp ConfirmOrderReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) CancelOrder(ctx context.Context, req *CancelOrderQuery) (*CancelOrderReply, error) {
+	respBody, err := c.request(ctx, "/cancel-order", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp CancelOrderReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*AdjustBalanceReply, error) {
+	respBody, err := c.request(ctx, "/adjust-balance", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp AdjustBalanceReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}
