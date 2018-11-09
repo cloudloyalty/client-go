@@ -165,8 +165,8 @@ type ApplyPurchaseTransaction struct {
 	IsAnonymousClient          bool                               `json:"isAnonymousClient,omitempty"`
 	ID                         string                             `json:"id"`
 	ExecutedAt                 string                             `json:"executedAt"`
-	ReceiptID                  string                             `json:"receiptId,omitempty"`
-	SessionID                  string                             `json:"sessionId,omitempty"`
+	ReceiptID                  int                                `json:"receiptId,omitempty"`
+	SessionID                  int                                `json:"sessionId,omitempty"`
 	ShopCode                   string                             `json:"shopCode"`
 	ShopName                   string                             `json:"shopName"`
 	Cashier                    string                             `json:"cashier,omitempty"`
@@ -244,8 +244,8 @@ type ApplyReturnTransaction struct {
 	ID                string  `json:"id"`
 	ExecutedAt        string  `json:"executedAt"`
 	PurchaseID        string  `json:"purchaseId"`
-	ReceiptID         string  `json:"receiptId,omitempty"`
-	SessionID         string  `json:"sessionId,omitempty"`
+	ReceiptID         int     `json:"receiptId,omitempty"`
+	SessionID         int     `json:"sessionId,omitempty"`
 	ShopCode          string  `json:"shopCode"`
 	ShopName          string  `json:"shopName"`
 	Cashier           string  `json:"cashier,omitempty"`
