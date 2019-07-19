@@ -73,8 +73,8 @@ type NewClientClient struct {
 	Birthdate         string            `json:"birthdate,omitempty"`
 	Email             string            `json:"email,omitempty"`
 	Level             int               `json:"level,omitempty"`
-	IsEmailSubscribed bool              `json:"isEmailSubscribed"`
-	IsPhoneSubscribed bool              `json:"isPhoneSubscribed"`
+	IsEmailSubscribed *bool             `json:"isEmailSubscribed,omitempty"`
+	IsPhoneSubscribed *bool             `json:"isPhoneSubscribed,omitempty"`
 	ExtraFields       map[string]string `json:"extraFields,omitempty"`
 }
 
@@ -110,22 +110,22 @@ type CalculatePurchaseQueryCalculate struct {
 	IsAnonymousClient bool            `json:"isAnonymousClient,omitempty"`
 	LoyaltyAction     string          `json:"loyaltyAction,omitempty"`
 	TotalAmount       float64         `json:"totalAmount"`
-	ApplyingAmount    float64         `json:"applyingAmount,omitempty"`
-	CollectingAmount  float64         `json:"collectingAmount,omitempty"`
-	ApplyBonuses      int             `json:"applyBonuses,omitempty"`
-	CollectBonuses    int             `json:"collectBonuses,omitempty"`
+	ApplyingAmount    *float64        `json:"applyingAmount,omitempty"`
+	CollectingAmount  *float64        `json:"collectingAmount,omitempty"`
+	ApplyBonuses      *int            `json:"applyBonuses,omitempty"`
+	CollectBonuses    *int            `json:"collectBonuses,omitempty"`
 	Promocode         string          `json:"promocode,omitempty"`
 	Units             map[string]Unit `json:"units,omitempty"`
 	OrderID           string          `json:"orderId,omitempty"`
 }
 
 type Unit struct {
-	Sku         string  `json:"sku"`
-	ItemTitle   string  `json:"itemTitle"`
-	ItemCount   float64 `json:"itemCount,omitempty"`
-	BuyingPrice float64 `json:"buyingPrice,omitempty"`
-	Price       float64 `json:"price"`
-	Category    string  `json:"category,omitempty"`
+	Sku         string   `json:"sku"`
+	ItemTitle   string   `json:"itemTitle"`
+	ItemCount   float64  `json:"itemCount,omitempty"`
+	BuyingPrice *float64 `json:"buyingPrice,omitempty"`
+	Price       float64  `json:"price"`
+	Category    string   `json:"category,omitempty"`
 }
 
 type CalculatePurchaseReply struct {
@@ -173,10 +173,10 @@ type ApplyPurchaseTransaction struct {
 	CashierID                  string                             `json:"cashierId,omitempty"`
 	LoyaltyAction              string                             `json:"loyaltyAction"`
 	TotalAmount                float64                            `json:"totalAmount"`
-	ApplyingAmount             float64                            `json:"applyingAmount,omitempty"`
-	CollectingAmount           float64                            `json:"collectingAmount,omitempty"`
+	ApplyingAmount             *float64                           `json:"applyingAmount,omitempty"`
+	CollectingAmount           *float64                           `json:"collectingAmount,omitempty"`
 	ApplyBonuses               int                                `json:"applyBonuses"`
-	CollectBonuses             int                                `json:"collectBonuses,omitempty"`
+	CollectBonuses             *int                               `json:"collectBonuses,omitempty"`
 	Promocode                  *ApplyPurchaseTransactionPromocode `json:"promocode,omitempty"`
 	Items                      []Item                             `json:"items,omitempty"`
 	IsConfirmationCodeRequired bool                               `json:"isConfirmationCodeRequired,omitempty"`
@@ -267,13 +267,13 @@ type ApplyReturnReplyConfirmation struct {
 }
 
 type Item struct {
-	SKU         string  `json:"sku"`
-	ItemTitle   string  `json:"itemTitle"`
-	ItemCount   float64 `json:"itemCount"`
-	BuyingPrice float64 `json:"buyingPrice,omitempty"`
-	Price       float64 `json:"price"`
-	Amount      float64 `json:"amount,omitempty"`
-	Category    string  `json:"category,omitempty"`
+	SKU         string   `json:"sku"`
+	ItemTitle   string   `json:"itemTitle"`
+	ItemCount   float64  `json:"itemCount"`
+	BuyingPrice *float64 `json:"buyingPrice,omitempty"`
+	Price       float64  `json:"price"`
+	Amount      *float64 `json:"amount,omitempty"`
+	Category    string   `json:"category,omitempty"`
 }
 
 // adjust-balance
@@ -325,13 +325,13 @@ type OrderQuery struct {
 }
 
 type SetOrderLoyalty struct {
-	Action                     string  `json:"action"`
-	ApplyingAmount             float64 `json:"applyingAmount,omitempty"`
-	CollectingAmount           float64 `json:"collectingAmount,omitempty"`
-	ApplyBonuses               int     `json:"applyBonuses"`
-	CollectBonuses             int     `json:"collectBonuses,omitempty"`
-	IsConfirmationCodeRequired bool    `json:"isConfirmationCodeRequired,omitempty"`
-	ConfirmationCode           string  `json:"confirmationCode,omitempty"`
+	Action                     string   `json:"action"`
+	ApplyingAmount             *float64 `json:"applyingAmount,omitempty"`
+	CollectingAmount           *float64 `json:"collectingAmount,omitempty"`
+	ApplyBonuses               int      `json:"applyBonuses"`
+	CollectBonuses             *int     `json:"collectBonuses,omitempty"`
+	IsConfirmationCodeRequired bool     `json:"isConfirmationCodeRequired,omitempty"`
+	ConfirmationCode           string   `json:"confirmationCode,omitempty"`
 }
 
 type SetOrderReply struct {

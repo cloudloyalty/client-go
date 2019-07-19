@@ -9,3 +9,8 @@ func FormatDateTime(t time.Time) string {
 	}
 	return res
 }
+
+func StringPtr(a string) *string    { return &a }
+func IntPtr(a int) *int             { return &a }
+func Float64Ptr(a float64) *float64 { return &a }
+func BoolPtr(a bool) *bool          { return &a }
