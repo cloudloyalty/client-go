@@ -1,5 +1,7 @@
 package cloudloyalty_client
 
+import "time"
+
 const (
 	LoyaltyActionNone         = "none"
 	LoyaltyActionApply        = "apply"
@@ -32,26 +34,26 @@ type GetBalanceReply struct {
 }
 
 type GetBalanceReplyClient struct {
-	PhoneNumber       string            `json:"phoneNumber"`
-	CardString        string            `json:"cardString"`
-	ExternalID        string            `json:"externalId"`
-	Surname           string            `json:"surname"`
-	Name              string            `json:"name"`
-	PatronymicName    string            `json:"patronymicName"`
-	FullName          string            `json:"fullName"`
+	PhoneNumber       string            `json:"phoneNumber,omitempty"`
+	CardString        string            `json:"cardString,omitempty"`
+	ExternalID        string            `json:"externalId,omitempty"`
+	Surname           string            `json:"surname,omitempty"`
+	Name              string            `json:"name,omitempty"`
+	PatronymicName    string            `json:"patronymicName,omitempty"`
+	FullName          string            `json:"fullName,omitempty"`
 	Gender            int               `json:"gender"`
-	Birthdate         string            `json:"birthdate"`
-	Email             string            `json:"email"`
+	Birthdate         string            `json:"birthdate,omitempty"`
+	Email             string            `json:"email,omitempty"`
 	Level             int               `json:"level"`
 	IsEmailSubscribed bool              `json:"isEmailSubscribed"`
 	IsPhoneSubscribed bool              `json:"isPhoneSubscribed"`
-	ExtraFields       map[string]string `json:"extraFields"`
+	ExtraFields       map[string]string `json:"extraFields,omitempty"`
 	Bonuses           int               `json:"bonuses"`
 	PendingBonuses    int               `json:"pendingBonuses"`
 }
 
 type GetBalanceReplyBonus struct {
-	ExpireAt string `json:"expireAt"`
+	ExpireAt string `json:"expireAt,omitempty"`
 	Amount   int    `json:"amount"`
 }
 
@@ -117,15 +119,19 @@ type CalculatePurchaseQueryCalculate struct {
 	Promocode         string          `json:"promocode,omitempty"`
 	Units             map[string]Unit `json:"units,omitempty"`
 	OrderID           string          `json:"orderId,omitempty"`
+	ExecutedAt        *time.Time      `json:"executedAt,omitempty"`
+	DoApplyBonuses    *bool           `json:"doApplyBonuses,omitempty"`   // obsolete
+	DoCollectBonuses  *bool           `json:"doCollectBonuses,omitempty"` // obsolete
 }
 
 type Unit struct {
 	Sku         string   `json:"sku"`
 	ItemTitle   string   `json:"itemTitle"`
-	ItemCount   float64  `json:"itemCount,omitempty"`
+	ItemCount   *float64 `json:"itemCount,omitempty"`
 	BuyingPrice *float64 `json:"buyingPrice,omitempty"`
 	Price       float64  `json:"price"`
 	Category    string   `json:"category,omitempty"`
+	Amount      *float64 `json:"amount,omitempty"`
 }
 
 type CalculatePurchaseReply struct {
@@ -135,21 +141,27 @@ type CalculatePurchaseReply struct {
 }
 
 type CalculatedUnit struct {
-	OriginalPrice     float64 `json:"originalPrice"`
-	PromocodeDiscount float64 `json:"promocodeDiscount"`
-	BonusesDiscount   float64 `json:"bonusesDiscount"`
-	TotalDiscount     float64 `json:"totalDiscount"`
-	CalculatedPrice   float64 `json:"calculatedPrice"`
+	IsPromocodeApplicable bool    `json:"isPromocodeApplicable"`
+	PromocodeDiscount     float64 `json:"promocodeDiscount"`
+	BonusesDiscount       float64 `json:"bonusesDiscount"`
+	TotalDiscount         float64 `json:"totalDiscount"`
+	OriginalPrice         float64 `json:"originalPrice"`
+	OriginalAmount        float64 `json:"originalAmount"`
+	CalculatedAmount      float64 `json:"calculatedAmount"`
 }
 
 type CalculatePurchaseReplyCalculate struct {
-	AppliedBonuses    int     `json:"appliedBonuses"`
-	CollectedBonuses  int     `json:"collectedBonuses"`
-	MaxBonuses        int     `json:"maxBonuses"`
-	PromocodeDiscount float64 `json:"promocodeDiscount"`
-	BonusesDiscount   float64 `json:"bonusesDiscount"`
-	TotalDiscount     float64 `json:"totalDiscount"`
-	RemainingAmount   float64 `json:"remainingDiscount"`
+	AppliedBonuses     int     `json:"appliedBonuses"`
+	CollectedBonuses   int     `json:"collectedBonuses"`
+	AppliableBonuses   int     `json:"appliableBonuses"`   // obsolete
+	CollectableBonuses int     `json:"collectableBonuses"` // obsolete
+	MaxBonuses         int     `json:"maxBonuses"`
+	PromocodeDiscount  float64 `json:"promocodeDiscount"`
+	BonusesDiscount    float64 `json:"bonusesDiscount"`
+	TotalDiscount      float64 `json:"totalDiscount"`
+	TotalAmount        float64 `json:"totalAmount"` // obsolete
+	RemainingAmount    float64 `json:"remainingAmount"`
+	PhoneNumber        string  `json:"phoneNumber,omitempty"` // obsolete`
 }
 
 // apply-purchase
