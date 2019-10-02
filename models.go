@@ -1,6 +1,9 @@
 package cloudloyalty_client
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 const (
 	LoyaltyActionNone         = "none"
@@ -18,6 +21,20 @@ const (
 type errorReply struct {
 	ErrorCode   int    `json:"errorCode"`
 	Description string `json:"description"`
+}
+
+type IntOrString int
+
+func (i *IntOrString) UnmarshalJSON(b []byte) error {
+	if len(b) >= 3 && b[0] == '"' && b[len(b)-1] == '"' {
+		b = b[1 : len(b)-1]
+	}
+	val, err := strconv.Atoi(string(b))
+	if err != nil {
+		return err
+	}
+	*i = IntOrString(val)
+	return nil
 }
 
 // get-balance
@@ -125,13 +142,16 @@ type CalculatePurchaseQueryCalculate struct {
 }
 
 type Unit struct {
-	Sku         string   `json:"sku"`
-	ItemTitle   string   `json:"itemTitle"`
-	ItemCount   *float64 `json:"itemCount,omitempty"`
-	BuyingPrice *float64 `json:"buyingPrice,omitempty"`
-	Price       float64  `json:"price"`
-	Category    string   `json:"category,omitempty"`
-	Amount      *float64 `json:"amount,omitempty"`
+	ExternalID         string   `json:"externalId,omitempty"`
+	Sku                string   `json:"sku"`
+	ItemTitle          string   `json:"itemTitle"`
+	ItemCount          *float64 `json:"itemCount,omitempty"`
+	BuyingPrice        *float64 `json:"buyingPrice,omitempty"`
+	Price              float64  `json:"price"`
+	Category           string   `json:"category,omitempty"`
+	CategoryExternalID string   `json:"categoryExternalID,omitempty"`
+	Amount             *float64 `json:"amount,omitempty"`
+	MinPrice           float64  `json:"minPrice,omitempty"`
 }
 
 type CalculatePurchaseReply struct {
@@ -177,8 +197,8 @@ type ApplyPurchaseTransaction struct {
 	IsAnonymousClient          bool                               `json:"isAnonymousClient,omitempty"`
 	ID                         string                             `json:"id"`
 	ExecutedAt                 string                             `json:"executedAt"`
-	ReceiptID                  int                                `json:"receiptId,omitempty"`
-	SessionID                  int                                `json:"sessionId,omitempty"`
+	ReceiptID                  IntOrString                        `json:"receiptId,omitempty"`
+	SessionID                  IntOrString                        `json:"sessionId,omitempty"`
 	ShopCode                   string                             `json:"shopCode"`
 	ShopName                   string                             `json:"shopName"`
 	Cashier                    string                             `json:"cashier,omitempty"`
@@ -279,13 +299,16 @@ type ApplyReturnReplyConfirmation struct {
 }
 
 type Item struct {
-	SKU         string   `json:"sku"`
-	ItemTitle   string   `json:"itemTitle"`
-	ItemCount   float64  `json:"itemCount"`
-	BuyingPrice *float64 `json:"buyingPrice,omitempty"`
-	Price       float64  `json:"price"`
-	Amount      *float64 `json:"amount,omitempty"`
-	Category    string   `json:"category,omitempty"`
+	ExternalID         string   `json:"externalId,omitempty"`
+	SKU                string   `json:"sku"`
+	ItemTitle          string   `json:"itemTitle"`
+	ItemCount          float64  `json:"itemCount"`
+	BuyingPrice        *float64 `json:"buyingPrice,omitempty"`
+	Price              float64  `json:"price"`
+	Amount             *float64 `json:"amount,omitempty"`
+	Category           string   `json:"category,omitempty"`
+	CategoryExternalID string   `json:"categoryExternalID,omitempty"`
+	MinPrice           float64  `json:"minPrice,omitempty"`
 }
 
 // adjust-balance

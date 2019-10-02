@@ -10,6 +10,14 @@ func FormatDateTime(t time.Time) string {
 	return res
 }
 
+func ParseDateTime(in string) (*time.Time, error) {
+	res, err := time.Parse(time.RFC3339, in)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
 func StringPtr(a string) *string    { return &a }
 func IntPtr(a int) *int             { return &a }
 func Float64Ptr(a float64) *float64 { return &a }
