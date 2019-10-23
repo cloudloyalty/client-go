@@ -1,7 +1,6 @@
 package cloudloyalty_client
 
 import (
-	"strconv"
 	"time"
 )
 
@@ -18,23 +17,10 @@ const (
 	GenderFemale  = 2
 )
 
-type errorReply struct {
+type ErrorReply struct {
 	ErrorCode   int    `json:"errorCode"`
 	Description string `json:"description"`
-}
-
-type IntOrString int
-
-func (i *IntOrString) UnmarshalJSON(b []byte) error {
-	if len(b) >= 3 && b[0] == '"' && b[len(b)-1] == '"' {
-		b = b[1 : len(b)-1]
-	}
-	val, err := strconv.Atoi(string(b))
-	if err != nil {
-		return err
-	}
-	*i = IntOrString(val)
-	return nil
+	Hint        string `json:"hint,omitempty"`
 }
 
 // get-balance
@@ -82,7 +68,7 @@ type NewClientQuery struct {
 
 type NewClientClient struct {
 	PhoneNumber       string            `json:"phoneNumber,omitempty"`
-	CardString        string            `json:"cardString,omitempty"`
+	Card              string            `json:"card,omitempty"`
 	ExternalID        string            `json:"externalId,omitempty"`
 	Surname           string            `json:"surname,omitempty"`
 	Name              string            `json:"name,omitempty"`
@@ -339,6 +325,7 @@ type ClientBonusesReply struct {
 	Available int `json:"available"`
 	Pending   int `json:"pending"`
 	Reserved  int `json:"reserved"`
+	Total     int `json:"total,omitempty"`
 }
 
 // set-order

@@ -90,6 +90,7 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 	}
 
 	respBody, err := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +103,7 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 		return nil, fmt.Errorf("http error code=%d", resp.StatusCode)
 	}
 
-	var serverError errorReply
+	var serverError ErrorReply
 	if err = json.Unmarshal(respBody, &serverError); err != nil {
 		return nil, err
 	}
