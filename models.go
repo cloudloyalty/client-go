@@ -32,12 +32,14 @@ type GetBalanceQuery struct {
 }
 
 type GetBalanceReply struct {
-	Client  GetBalanceReplyClient  `json:"client"`
-	Bonuses []GetBalanceReplyBonus `json:"bonuses"`
+	Client      GetBalanceReplyClient  `json:"client"`
+	Bonuses     []GetBalanceReplyBonus `json:"bonuses"`
+	WalletsLink string                 `json:"walletsLink,omitempty"`
 }
 
 type GetBalanceReplyClient struct {
 	PhoneNumber       string            `json:"phoneNumber,omitempty"`
+	Card              int64             `json:"card,omitempty"`
 	CardString        string            `json:"cardString,omitempty"`
 	ExternalID        string            `json:"externalId,omitempty"`
 	Surname           string            `json:"surname,omitempty"`
@@ -53,11 +55,18 @@ type GetBalanceReplyClient struct {
 	ExtraFields       map[string]string `json:"extraFields,omitempty"`
 	Bonuses           int               `json:"bonuses"`
 	PendingBonuses    int               `json:"pendingBonuses"`
+	Children          []Child           `json:"children,omitempty"`
 }
 
 type GetBalanceReplyBonus struct {
 	ExpireAt string `json:"expireAt,omitempty"`
 	Amount   int    `json:"amount"`
+}
+
+type Child struct {
+	Name      string `json:"name,omitempty"`
+	Birthdate string `json:"birthdate,omitempty"`
+	Gender    int    `json:"gender"`
 }
 
 // new-client
