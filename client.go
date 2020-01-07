@@ -85,12 +85,14 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 	}
 
 	resp, err := c.httpClient.Do(httpReq)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 	if err != nil {
 		return nil, err
 	}
 
 	respBody, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
 	if err != nil {
 		return nil, err
 	}

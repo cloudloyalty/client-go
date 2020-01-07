@@ -346,7 +346,7 @@ type SetOrderQuery struct {
 
 type OrderQuery struct {
 	ID          string           `json:"id"`
-	ExecutedAt  string           `json:"executedAt,omitempty"`
+	ExecutedAt  *time.Time       `json:"executedAt,omitempty"`
 	ShopCode    string           `json:"shopCode"`
 	ShopName    string           `json:"shopName"`
 	TotalAmount float64          `json:"totalAmount"`
@@ -356,13 +356,13 @@ type OrderQuery struct {
 }
 
 type SetOrderLoyalty struct {
-	Action                     string   `json:"action"`
-	ApplyingAmount             *float64 `json:"applyingAmount,omitempty"`
-	CollectingAmount           *float64 `json:"collectingAmount,omitempty"`
-	ApplyBonuses               int      `json:"applyBonuses"`
-	CollectBonuses             *int     `json:"collectBonuses,omitempty"`
-	IsConfirmationCodeRequired bool     `json:"isConfirmationCodeRequired,omitempty"`
-	ConfirmationCode           string   `json:"confirmationCode,omitempty"`
+	Action                     string       `json:"action"`
+	ApplyingAmount             *float64     `json:"applyingAmount,omitempty"`
+	CollectingAmount           *float64     `json:"collectingAmount,omitempty"`
+	ApplyBonuses               *IntOrString `json:"applyBonuses"`
+	CollectBonuses             *int         `json:"collectBonuses,omitempty"`
+	IsConfirmationCodeRequired bool         `json:"isConfirmationCodeRequired,omitempty"`
+	ConfirmationCode           string       `json:"confirmationCode,omitempty"`
 }
 
 type SetOrderReply struct {
@@ -373,14 +373,14 @@ type SetOrderReply struct {
 type SetOrderOperationResult struct {
 	AppliedBonuses   int     `json:"appliedBonuses"`
 	CollectedBonuses int     `json:"collectedBonuses"`
-	RemainingAmount  float64 `json:"remainingDiscount"`
+	RemainingAmount  float64 `json:"remainingAmount"`
 }
 
 // confirm-order
 
 type ConfirmOrderQuery struct {
-	OrderID    string `json:"orderId"`
-	ExecutedAt string `json:"executedAt,omitempty"`
+	OrderID    string     `json:"orderId"`
+	ExecutedAt *time.Time `json:"executedAt,omitempty"`
 }
 
 type ConfirmOrderReply struct {
@@ -391,8 +391,8 @@ type ConfirmOrderReply struct {
 // cancel-order
 
 type CancelOrderQuery struct {
-	OrderID    string `json:"orderId"`
-	ExecutedAt string `json:"executedAt,omitempty"`
+	OrderID    string     `json:"orderId"`
+	ExecutedAt *time.Time `json:"executedAt,omitempty"`
 }
 
 type CancelOrderReply struct {
