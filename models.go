@@ -399,3 +399,18 @@ type CancelOrderReply struct {
 	OperationResult SetOrderOperationResult `json:"operationResult"`
 	ClientBonuses   ClientBonusesReply      `json:"clientBonuses"`
 }
+
+// send-confirmation-code
+type SendConfirmationCodeQuery struct {
+	PhoneNumber       string `json:"phoneNumber"`
+	Card              string `json:"card"`
+	ExternalID        string `json:"externalId"`
+	IsAnonymousClient bool   `json:"isAnonymousClient"`
+	To                string `json:"to"`
+}
+
+type SendConfirmationCodeReply struct {
+	Code      string    `json:"code"`
+	MsgID     string    `json:"msgid"`
+	ExpiresAt time.Time `json:"expiresAt"`
+}

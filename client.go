@@ -40,6 +40,7 @@ type ClientInterface interface {
 	ConfirmOrder(ctx context.Context, req *ConfirmOrderQuery) (*ConfirmOrderReply, error)
 	CancelOrder(ctx context.Context, req *CancelOrderQuery) (*CancelOrderReply, error)
 	AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*AdjustBalanceReply, error)
+	SendConfirmationCode(ctx context.Context, req *SendConfirmationCodeQuery) (*SendConfirmationCodeReply, error)
 }
 
 type Client struct {
@@ -245,6 +246,18 @@ func (c *Client) AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*A
 		return nil, err
 	}
 	var resp AdjustBalanceReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) SendConfirmationCode(ctx context.Context, req *SendConfirmationCodeQuery) (*SendConfirmationCodeReply, error) {
+	respBody, err := c.request(ctx, "/send-confirmation-code", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp SendConfirmationCodeReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}
