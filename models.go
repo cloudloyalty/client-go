@@ -93,8 +93,9 @@ type NewClientClient struct {
 }
 
 type NewClientReply struct {
-	Client  GetBalanceReplyClient  `json:"client"`
-	Bonuses []GetBalanceReplyBonus `json:"bonuses"`
+	Client      GetBalanceReplyClient  `json:"client"`
+	Bonuses     []GetBalanceReplyBonus `json:"bonuses"`
+	WalletsLink string                 `json:"walletsLink,omitempty"`
 }
 
 // update-client
@@ -107,8 +108,9 @@ type UpdateClientQuery struct {
 }
 
 type UpdateClientReply struct {
-	Client  GetBalanceReplyClient  `json:"client"`
-	Bonuses []GetBalanceReplyBonus `json:"bonuses"`
+	Client      GetBalanceReplyClient  `json:"client"`
+	Bonuses     []GetBalanceReplyBonus `json:"bonuses"`
+	WalletsLink string                 `json:"walletsLink,omitempty"`
 }
 
 // calculate-purchase
