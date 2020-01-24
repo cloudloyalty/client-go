@@ -90,6 +90,7 @@ type NewClientClient struct {
 	IsEmailSubscribed *bool             `json:"isEmailSubscribed,omitempty"`
 	IsPhoneSubscribed *bool             `json:"isPhoneSubscribed,omitempty"`
 	ExtraFields       map[string]string `json:"extraFields,omitempty"`
+	Children          []Child           `json:"children,omitempty"`
 }
 
 type NewClientReply struct {
