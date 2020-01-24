@@ -405,11 +405,11 @@ type CancelOrderReply struct {
 
 // send-confirmation-code
 type SendConfirmationCodeQuery struct {
-	PhoneNumber       string `json:"phoneNumber"`
-	Card              string `json:"card"`
-	ExternalID        string `json:"externalId"`
+	PhoneNumber       string `json:"phoneNumber,omitempty"`
+	Card              string `json:"card,omitempty"`
+	ExternalID        string `json:"externalId,omitempty"`
 	IsAnonymousClient bool   `json:"isAnonymousClient"`
-	To                string `json:"to"`
+	To                string `json:"to,omitempty"`
 }
 
 type SendConfirmationCodeReply struct {
