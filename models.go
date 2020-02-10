@@ -72,7 +72,19 @@ type Child struct {
 // new-client
 
 type NewClientQuery struct {
-	Client NewClientClient `json:"client"`
+	Client  NewClientClient `json:"client"`
+	Shop    *ShopQuery      `json:"shop"`
+	Cashier *CashierQuery   `json:"cashier"`
+}
+
+type ShopQuery struct {
+	Code string `json:"code"`
+	Name string `json:"name"`
+}
+
+type CashierQuery struct {
+	Code string `json:"code"`
+	Name string `json:"name"`
 }
 
 type NewClientClient struct {
