@@ -251,33 +251,42 @@ type ApplyPurchaseReplyBonuses struct {
 
 // calculate-return
 
+// CalculateReturnQuery is a request model for /calculate-return API
 type CalculateReturnQuery struct {
 	Calculate CalculateReturnQueryCalculate `json:"calculate"`
 }
 
+// CalculateReturnQueryCalculate holds info for return calculation
 type CalculateReturnQueryCalculate struct {
 	PhoneNumber  string  `json:"phoneNumber,omitempty"`
 	Card         string  `json:"card,omitempty"`
 	ExternalID   string  `json:"externalId,omitempty"`
 	PurchaseID   string  `json:"purchaseId"`
 	RefundAmount float64 `json:"refundAmount"`
+	Items        []Item  `json:"items,omitempty"`
 }
 
+// CalculateReturnReply is a response model for /calculate-return API
 type CalculateReturnReply struct {
 	Calculation CalculateReturnReplyCalculate `json:"calculation"`
 }
 
+// CalculateReturnReplyCalculate holds results of return calculation
 type CalculateReturnReplyCalculate struct {
-	RecoveredBonuses int `json:"recoveredBonuses"`
-	CancelledBonuses int `json:"cancelledBonuses"`
+	PurchaseID       string  `json:"purchaseId"`
+	RefundAmount     float64 `json:"refundAmount"`
+	RecoveredBonuses int     `json:"recoveredBonuses"`
+	CancelledBonuses int     `json:"cancelledBonuses"`
 }
 
 // apply-return
 
+// ApplyReturnQuery is a request model for /apply-return API
 type ApplyReturnQuery struct {
 	Transaction ApplyReturnTransaction `json:"transaction"`
 }
 
+// ApplyReturnTransaction holds info for apply return
 type ApplyReturnTransaction struct {
 	PhoneNumber       string  `json:"phoneNumber,omitempty"`
 	Card              string  `json:"card,omitempty"`
@@ -296,12 +305,14 @@ type ApplyReturnTransaction struct {
 	Items             []Item  `json:"items,omitempty"`
 }
 
+// ApplyReturnReply is a response model for /apply-return API
 type ApplyReturnReply struct {
 	Confirmation ApplyReturnReplyConfirmation `json:"confirmation"`
 }
 
+// ApplyReturnReplyConfirmation holds results for apply return
 type ApplyReturnReplyConfirmation struct {
-	PhoneNumber      string  `json:"phoneNumber"`
+	PhoneNumber      string  `json:"phoneNumber"` // deprecated
 	RefundID         string  `json:"refundId"`
 	RefundAmount     float64 `json:"refundAmount"`
 	RecoveredBonuses int     `json:"recoveredBonuses"`
