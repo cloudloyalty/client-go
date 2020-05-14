@@ -15,9 +15,9 @@ func (i *IntOrString) UnmarshalJSON(b []byte) error {
 		}
 		b = b[1 : len(b)-1]
 	}
-	val, err := strconv.Atoi(string(b))
+	val, err := strconv.ParseFloat(string(b), 64)
 	if err != nil {
-		return err
+		val = 0
 	}
 	*i = IntOrString(val)
 	return nil
