@@ -53,3 +53,7 @@ func (d *Birthdate) UnmarshalJSON(b []byte) error {
 	*d = Birthdate(t)
 	return nil
 }
+
+func (d *Birthdate) MarshalJSON() ([]byte, error) {
+	return time.Time(*d).MarshalJSON()
+}
