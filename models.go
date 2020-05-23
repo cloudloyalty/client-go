@@ -47,7 +47,7 @@ type GetBalanceReplyClient struct {
 	PatronymicName    string            `json:"patronymicName,omitempty"`
 	FullName          string            `json:"fullName,omitempty"`
 	Gender            int               `json:"gender"`
-	Birthdate         Birthdate         `json:"birthdate,omitempty"`
+	Birthdate         *Birthdate        `json:"birthdate,omitempty"`
 	Email             string            `json:"email,omitempty"`
 	Level             int               `json:"level"`
 	IsEmailSubscribed bool              `json:"isEmailSubscribed"`
@@ -64,9 +64,9 @@ type GetBalanceReplyBonus struct {
 }
 
 type Child struct {
-	Name      string    `json:"name,omitempty"`
-	Birthdate Birthdate `json:"birthdate,omitempty"`
-	Gender    int       `json:"gender"`
+	Name      string     `json:"name,omitempty"`
+	Birthdate *Birthdate `json:"birthdate,omitempty"`
+	Gender    int        `json:"gender"`
 }
 
 // new-client
@@ -96,13 +96,16 @@ type NewClientClient struct {
 	PatronymicName    string            `json:"patronymicName,omitempty"`
 	FullName          string            `json:"fullName,omitempty"`
 	Gender            int               `json:"gender,omitempty"`
-	Birthdate         Birthdate         `json:"birthdate,omitempty"`
+	Birthdate         *Birthdate        `json:"birthdate,omitempty"`
 	Email             string            `json:"email,omitempty"`
 	Level             int               `json:"level,omitempty"`
 	IsEmailSubscribed *bool             `json:"isEmailSubscribed,omitempty"`
 	IsPhoneSubscribed *bool             `json:"isPhoneSubscribed,omitempty"`
 	ExtraFields       map[string]string `json:"extraFields,omitempty"`
 	Children          []Child           `json:"children,omitempty"`
+
+	City   string `json:"city,omitempty"`   // deprecated
+	Street string `json:"street,omitempty"` // deprecated
 }
 
 type NewClientReply struct {
