@@ -59,8 +59,8 @@ type GetBalanceReplyClient struct {
 }
 
 type GetBalanceReplyBonus struct {
-	ExpireAt string `json:"expireAt,omitempty"`
-	Amount   int    `json:"amount"`
+	ExpireAt *time.Time `json:"expireAt,omitempty"`
+	Amount   int        `json:"amount"`
 }
 
 type Child struct {
@@ -209,7 +209,7 @@ type ApplyPurchaseTransaction struct {
 	ExternalID                 string                             `json:"externalId,omitempty"`
 	IsAnonymousClient          bool                               `json:"isAnonymousClient,omitempty"`
 	ID                         string                             `json:"id"`
-	ExecutedAt                 string                             `json:"executedAt"`
+	ExecutedAt                 time.Time                          `json:"executedAt"`
 	ReceiptID                  IntOrString                        `json:"receiptId,omitempty"`
 	SessionID                  IntOrString                        `json:"sessionId,omitempty"`
 	ShopCode                   string                             `json:"shopCode"`
@@ -291,21 +291,21 @@ type ApplyReturnQuery struct {
 
 // ApplyReturnTransaction holds info for apply return
 type ApplyReturnTransaction struct {
-	PhoneNumber       string  `json:"phoneNumber,omitempty"`
-	Card              string  `json:"card,omitempty"`
-	ExternalID        string  `json:"externalId,omitempty"`
-	IsAnonymousClient bool    `json:"isAnonymousClient,omitempty"`
-	ID                string  `json:"id"`
-	ExecutedAt        string  `json:"executedAt"`
-	PurchaseID        string  `json:"purchaseId"`
-	ReceiptID         int     `json:"receiptId,omitempty"`
-	SessionID         int     `json:"sessionId,omitempty"`
-	ShopCode          string  `json:"shopCode"`
-	ShopName          string  `json:"shopName"`
-	Cashier           string  `json:"cashier,omitempty"`
-	CashierID         string  `json:"cashierId,omitempty"`
-	RefundAmount      float64 `json:"refundAmount"`
-	Items             []Item  `json:"items,omitempty"`
+	PhoneNumber       string    `json:"phoneNumber,omitempty"`
+	Card              string    `json:"card,omitempty"`
+	ExternalID        string    `json:"externalId,omitempty"`
+	IsAnonymousClient bool      `json:"isAnonymousClient,omitempty"`
+	ID                string    `json:"id"`
+	ExecutedAt        time.Time `json:"executedAt"`
+	PurchaseID        string    `json:"purchaseId"`
+	ReceiptID         int       `json:"receiptId,omitempty"`
+	SessionID         int       `json:"sessionId,omitempty"`
+	ShopCode          string    `json:"shopCode"`
+	ShopName          string    `json:"shopName"`
+	Cashier           string    `json:"cashier,omitempty"`
+	CashierID         string    `json:"cashierId,omitempty"`
+	RefundAmount      float64   `json:"refundAmount"`
+	Items             []Item    `json:"items,omitempty"`
 }
 
 // ApplyReturnReply is a response model for /apply-return API
