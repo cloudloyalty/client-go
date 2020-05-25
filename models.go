@@ -64,9 +64,9 @@ type GetBalanceReplyBonus struct {
 }
 
 type Child struct {
-	Name      string     `json:"name,omitempty"`
-	Birthdate *Birthdate `json:"birthdate,omitempty"`
-	Gender    int        `json:"gender"`
+	Name      string          `json:"name,omitempty"`
+	Birthdate *ChildBirthdate `json:"birthdate,omitempty"`
+	Gender    int             `json:"gender"`
 }
 
 // new-client

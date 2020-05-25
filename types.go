@@ -27,6 +27,7 @@ func (i *IntAsIntOrString) UnmarshalJSON(b []byte) error {
 }
 
 type Birthdate time.Time
+type ChildBirthdate time.Time
 
 // UnmarshalJSON parses string to date. Following formats are supported:
 // - RFC3999
@@ -34,8 +35,30 @@ type Birthdate time.Time
 // - MM-DD
 // If the actual year is unknown, 1900 should be passed.
 func (d *Birthdate) UnmarshalJSON(b []byte) error {
+	t, err := parseBirthdate(b, false)
+	if err != nil {
+		return err
+	}
+	if t != nil {
+		*d = Birthdate(*t)
+	}
+	return nil
+}
+
+func (d *ChildBirthdate) UnmarshalJSON(b []byte) error {
+	t, err := parseBirthdate(b, true)
+	if err != nil {
+		return err
+	}
+	if t != nil {
+		*d = ChildBirthdate(*t)
+	}
+	return nil
+}
+
+func parseBirthdate(b []byte, child bool) (*time.Time, error) {
 	if string(b) == "null" {
-		return nil
+		return nil, nil
 	}
 	// note: the value is wrapped with "
 	t, err := time.Parse("\"01-02\"", string(b))
@@ -44,17 +67,18 @@ func (d *Birthdate) UnmarshalJSON(b []byte) error {
 		if err != nil {
 			t, err = time.Parse(`"`+time.RFC3339+`"`, string(b))
 			if err != nil {
-				return err
+				return nil, err
 			}
 		}
 	}
 	y := t.Year()
-	if y < 1900 || y > time.Now().Year()+1 { // Allow to set currentYear + 1 for expecting a baby
+	if y < 1900 ||
+		y > time.Now().Year()+1 || // For children allow to set currentYear + 1 for expecting a baby
+		(!child && y >= time.Now().Year()) { // For adults the year must be less than currentYear
 		y = 1900
 	}
 	t = time.Date(y, t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
-	*d = Birthdate(t)
-	return nil
+	return &t, nil
 }
 
 // MarshalJSON formats birthdate as a JSON string. Date format is YYYY-MM-DD.
