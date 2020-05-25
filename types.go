@@ -71,18 +71,4 @@ func (d *Birthdate) MarshalJSON() ([]byte, error) {
 	return b, nil
 }
 
-type ExtraFields map[string]*ExtraFieldValue
-type ExtraFieldValue string
-
-// UnmarshalJSON decodes anything into a string.
-func (v *ExtraFieldValue) UnmarshalJSON(b []byte) error {
-	if string(b) == "null" {
-		return nil
-	}
-	// string?
-	if len(b) >= 2 && b[0] == '"' && b[len(b)-1] == '"' {
-		b = b[1 : len(b)-1]
-	}
-	*v = ExtraFieldValue(b)
-	return nil
-}
+type ExtraFields map[string]interface{}
