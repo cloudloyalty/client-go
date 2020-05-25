@@ -45,7 +45,7 @@ func TestIntOrString_UnmarshalJSON(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		var i IntOrString
+		var i IntAsIntOrString
 		if err := i.UnmarshalJSON([]byte(c.input)); err != nil || int(i) != c.expected {
 			t.Fatalf("failed asserting that \"%s\" produces %d (got %d)", c.input, c.expected, i)
 		}

@@ -38,24 +38,24 @@ type GetBalanceReply struct {
 }
 
 type GetBalanceReplyClient struct {
-	PhoneNumber       string            `json:"phoneNumber,omitempty"`
-	Card              int64             `json:"card,omitempty"`
-	CardString        string            `json:"cardString,omitempty"`
-	ExternalID        string            `json:"externalId,omitempty"`
-	Surname           string            `json:"surname,omitempty"`
-	Name              string            `json:"name,omitempty"`
-	PatronymicName    string            `json:"patronymicName,omitempty"`
-	FullName          string            `json:"fullName,omitempty"`
-	Gender            int               `json:"gender"`
-	Birthdate         *Birthdate        `json:"birthdate,omitempty"`
-	Email             string            `json:"email,omitempty"`
-	Level             int               `json:"level"`
-	IsEmailSubscribed bool              `json:"isEmailSubscribed"`
-	IsPhoneSubscribed bool              `json:"isPhoneSubscribed"`
-	ExtraFields       map[string]string `json:"extraFields,omitempty"`
-	Bonuses           int               `json:"bonuses"`
-	PendingBonuses    int               `json:"pendingBonuses"`
-	Children          []Child           `json:"children,omitempty"`
+	PhoneNumber       string      `json:"phoneNumber,omitempty"`
+	Card              int64       `json:"card,omitempty"`
+	CardString        string      `json:"cardString,omitempty"`
+	ExternalID        string      `json:"externalId,omitempty"`
+	Surname           string      `json:"surname,omitempty"`
+	Name              string      `json:"name,omitempty"`
+	PatronymicName    string      `json:"patronymicName,omitempty"`
+	FullName          string      `json:"fullName,omitempty"`
+	Gender            int         `json:"gender"`
+	Birthdate         *Birthdate  `json:"birthdate,omitempty"`
+	Email             string      `json:"email,omitempty"`
+	Level             int         `json:"level"`
+	IsEmailSubscribed bool        `json:"isEmailSubscribed"`
+	IsPhoneSubscribed bool        `json:"isPhoneSubscribed"`
+	ExtraFields       ExtraFields `json:"extraFields,omitempty"`
+	Bonuses           int         `json:"bonuses"`
+	PendingBonuses    int         `json:"pendingBonuses"`
+	Children          []Child     `json:"children,omitempty"`
 }
 
 type GetBalanceReplyBonus struct {
@@ -88,21 +88,21 @@ type CashierQuery struct {
 }
 
 type NewClientClient struct {
-	PhoneNumber       string            `json:"phoneNumber,omitempty"`
-	Card              string            `json:"card,omitempty"`
-	ExternalID        string            `json:"externalId,omitempty"`
-	Surname           string            `json:"surname,omitempty"`
-	Name              string            `json:"name,omitempty"`
-	PatronymicName    string            `json:"patronymicName,omitempty"`
-	FullName          string            `json:"fullName,omitempty"`
-	Gender            int               `json:"gender,omitempty"`
-	Birthdate         *Birthdate        `json:"birthdate,omitempty"`
-	Email             string            `json:"email,omitempty"`
-	Level             int               `json:"level,omitempty"`
-	IsEmailSubscribed *bool             `json:"isEmailSubscribed,omitempty"`
-	IsPhoneSubscribed *bool             `json:"isPhoneSubscribed,omitempty"`
-	ExtraFields       map[string]string `json:"extraFields,omitempty"`
-	Children          []Child           `json:"children,omitempty"`
+	PhoneNumber       string      `json:"phoneNumber,omitempty"`
+	Card              string      `json:"card,omitempty"`
+	ExternalID        string      `json:"externalId,omitempty"`
+	Surname           string      `json:"surname,omitempty"`
+	Name              string      `json:"name,omitempty"`
+	PatronymicName    string      `json:"patronymicName,omitempty"`
+	FullName          string      `json:"fullName,omitempty"`
+	Gender            int         `json:"gender,omitempty"`
+	Birthdate         *Birthdate  `json:"birthdate,omitempty"`
+	Email             string      `json:"email,omitempty"`
+	Level             int         `json:"level,omitempty"`
+	IsEmailSubscribed *bool       `json:"isEmailSubscribed,omitempty"`
+	IsPhoneSubscribed *bool       `json:"isPhoneSubscribed,omitempty"`
+	ExtraFields       ExtraFields `json:"extraFields,omitempty"`
+	Children          []Child     `json:"children,omitempty"`
 
 	City   string `json:"city,omitempty"`   // deprecated
 	Street string `json:"street,omitempty"` // deprecated
@@ -210,8 +210,8 @@ type ApplyPurchaseTransaction struct {
 	IsAnonymousClient          bool                               `json:"isAnonymousClient,omitempty"`
 	ID                         string                             `json:"id"`
 	ExecutedAt                 time.Time                          `json:"executedAt"`
-	ReceiptID                  IntOrString                        `json:"receiptId,omitempty"`
-	SessionID                  IntOrString                        `json:"sessionId,omitempty"`
+	ReceiptID                  IntAsIntOrString                   `json:"receiptId,omitempty"`
+	SessionID                  IntAsIntOrString                   `json:"sessionId,omitempty"`
 	ShopCode                   string                             `json:"shopCode"`
 	ShopName                   string                             `json:"shopName"`
 	Cashier                    string                             `json:"cashier,omitempty"`
@@ -385,13 +385,13 @@ type OrderQuery struct {
 }
 
 type SetOrderLoyalty struct {
-	Action                     string       `json:"action"`
-	ApplyingAmount             *float64     `json:"applyingAmount,omitempty"`
-	CollectingAmount           *float64     `json:"collectingAmount,omitempty"`
-	ApplyBonuses               *IntOrString `json:"applyBonuses"`
-	CollectBonuses             *int         `json:"collectBonuses,omitempty"`
-	IsConfirmationCodeRequired bool         `json:"isConfirmationCodeRequired,omitempty"`
-	ConfirmationCode           string       `json:"confirmationCode,omitempty"`
+	Action                     string            `json:"action"`
+	ApplyingAmount             *float64          `json:"applyingAmount,omitempty"`
+	CollectingAmount           *float64          `json:"collectingAmount,omitempty"`
+	ApplyBonuses               *IntAsIntOrString `json:"applyBonuses"`
+	CollectBonuses             *int              `json:"collectBonuses,omitempty"`
+	IsConfirmationCodeRequired bool              `json:"isConfirmationCodeRequired,omitempty"`
+	ConfirmationCode           string            `json:"confirmationCode,omitempty"`
 }
 
 type SetOrderReply struct {

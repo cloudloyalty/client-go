@@ -5,13 +5,15 @@ import (
 	"time"
 )
 
-type IntOrString int
+type IntAsIntOrString int
 
-func (i *IntOrString) UnmarshalJSON(b []byte) error {
+// UnmarshalJSON decodes int or string into int without triggering an error.
+// If string is not a valid number, assumes 0.
+func (i *IntAsIntOrString) UnmarshalJSON(b []byte) error {
 	if len(b) >= 2 && b[0] == '"' && b[len(b)-1] == '"' {
 		// empty string is considered as zero
 		if len(b) == 2 {
-			*i = IntOrString(0)
+			*i = IntAsIntOrString(0)
 			return nil
 		}
 		b = b[1 : len(b)-1]
@@ -20,7 +22,7 @@ func (i *IntOrString) UnmarshalJSON(b []byte) error {
 	if err != nil {
 		val = 0
 	}
-	*i = IntOrString(val)
+	*i = IntAsIntOrString(val)
 	return nil
 }
 
@@ -67,4 +69,20 @@ func (d *Birthdate) MarshalJSON() ([]byte, error) {
 	b = t.AppendFormat(b, "2006-01-02")
 	b = append(b, '"')
 	return b, nil
+}
+
+type ExtraFields map[string]*ExtraFieldValue
+type ExtraFieldValue string
+
+// UnmarshalJSON decodes anything into a string.
+func (v *ExtraFieldValue) UnmarshalJSON(b []byte) error {
+	if string(b) == "null" {
+		return nil
+	}
+	// string?
+	if len(b) >= 2 && b[0] == '"' && b[len(b)-1] == '"' {
+		b = b[1 : len(b)-1]
+	}
+	*v = ExtraFieldValue(b)
+	return nil
 }
