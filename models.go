@@ -102,7 +102,7 @@ type NewClientClient struct {
 	IsEmailSubscribed *bool       `json:"isEmailSubscribed,omitempty"`
 	IsPhoneSubscribed *bool       `json:"isPhoneSubscribed,omitempty"`
 	ExtraFields       ExtraFields `json:"extraFields,omitempty"`
-	Children          []Child     `json:"children,omitempty"`
+	Children          *[]Child    `json:"children,omitempty"`
 
 	City   string `json:"city,omitempty"`   // deprecated
 	Street string `json:"street,omitempty"` // deprecated
