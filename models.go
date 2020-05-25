@@ -46,7 +46,7 @@ type GetBalanceReplyClient struct {
 	Name              string            `json:"name,omitempty"`
 	PatronymicName    string            `json:"patronymicName,omitempty"`
 	FullName          string            `json:"fullName,omitempty"`
-	Gender            int               `json:"gender,omitempty"`
+	Gender            int               `json:"gender"`
 	Birthdate         *Birthdate        `json:"birthdate,omitempty"`
 	Email             string            `json:"email,omitempty"`
 	Level             int               `json:"level"`
@@ -66,7 +66,7 @@ type GetBalanceReplyBonus struct {
 type Child struct {
 	Name      string     `json:"name,omitempty"`
 	Birthdate *Birthdate `json:"birthdate,omitempty"`
-	Gender    int        `json:"gender,omitempty"`
+	Gender    int        `json:"gender"`
 }
 
 // new-client
