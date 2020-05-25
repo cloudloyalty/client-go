@@ -56,6 +56,24 @@ func (d *ChildBirthdate) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON formats birthdate as a JSON string. Date format is YYYY-MM-DD.
+// Year 1900 means that the actual year is unknown.
+func (d *Birthdate) MarshalJSON() ([]byte, error) {
+	t := time.Time(*d)
+	if t.Year() < 1900 || t.Year() > time.Now().Year()+1 {
+		t = time.Date(1900, t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
+	}
+	b := make([]byte, 0, 12)
+	b = append(b, '"')
+	b = t.AppendFormat(b, "2006-01-02")
+	b = append(b, '"')
+	return b, nil
+}
+
+func (d *ChildBirthdate) MarshalJSON() ([]byte, error) {
+	return Birthdate(*d).MarshalJSON()
+}
+
 func parseBirthdate(b []byte, child bool) (*time.Time, error) {
 	if string(b) == "null" {
 		return nil, nil
@@ -79,20 +97,6 @@ func parseBirthdate(b []byte, child bool) (*time.Time, error) {
 	}
 	t = time.Date(y, t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
 	return &t, nil
-}
-
-// MarshalJSON formats birthdate as a JSON string. Date format is YYYY-MM-DD.
-// Year 1900 means that the actual year is unknown.
-func (d *Birthdate) MarshalJSON() ([]byte, error) {
-	t := time.Time(*d)
-	if t.Year() < 1900 || t.Year() > time.Now().Year()+1 {
-		t = time.Date(1900, t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
-	}
-	b := make([]byte, 0, 12)
-	b = append(b, '"')
-	b = t.AppendFormat(b, "2006-01-02")
-	b = append(b, '"')
-	return b, nil
 }
 
 type ExtraFields map[string]interface{}
