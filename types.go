@@ -74,7 +74,7 @@ func parseBirthdate(b []byte, child bool) (*time.Time, error) {
 	y := t.Year()
 	if y < 1900 ||
 		y > time.Now().Year()+1 || // For children allow to set currentYear + 1 for expecting a baby
-		(!child && y >= time.Now().Year()) { // For adults the year must be less than currentYear
+		(!child && y >= time.Now().Year()-1) { // For adults the year must be less than currentYear - 1
 		y = 1900
 	}
 	t = time.Date(y, t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
