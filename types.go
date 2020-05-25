@@ -71,7 +71,9 @@ func (d *Birthdate) MarshalJSON() ([]byte, error) {
 }
 
 func (d *ChildBirthdate) MarshalJSON() ([]byte, error) {
-	return Birthdate(*d).MarshalJSON()
+	b := Birthdate(*d)
+	bRef := &b
+	return bRef.MarshalJSON()
 }
 
 func parseBirthdate(b []byte, child bool) (*time.Time, error) {
