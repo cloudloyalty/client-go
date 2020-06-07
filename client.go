@@ -45,6 +45,7 @@ type ClientInterface interface {
 	IssuePromocode(ctx context.Context, req *IssuePromocodeQuery) (*IssuePromocodeReply, error)
 	RevertPurchase(ctx context.Context, req *RevertPurchaseQuery) (*RevertPurchaseReply, error)
 	V2CalculatePurchase(ctx context.Context, req *V2CalculatePurchaseRequest) (*V2CalculatePurchaseReply, error)
+	SetPurchase(ctx context.Context, req *SetPurchaseRequest) (*SetPurchaseReply, error)
 	ConfirmTicket(ctx context.Context, req *ConfirmTicketRequest) (*ConfirmTicketReply, error)
 	DiscardTicket(ctx context.Context, req *DiscardTicketRequest) (*DiscardTicketReply, error)
 }
@@ -312,6 +313,18 @@ func (c *Client) V2CalculatePurchase(ctx context.Context, req *V2CalculatePurcha
 		return nil, err
 	}
 	var resp V2CalculatePurchaseReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) SetPurchase(ctx context.Context, req *SetPurchaseRequest) (*SetPurchaseReply, error) {
+	respBody, err := c.request(ctx, "/set-purchase", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp SetPurchaseReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}
