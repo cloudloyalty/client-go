@@ -32,8 +32,8 @@ type ClientInterface interface {
 	GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBalanceReply, error)
 	NewClient(ctx context.Context, req *NewClientQuery) (*NewClientReply, error)
 	UpdateClient(ctx context.Context, req *UpdateClientQuery) (*UpdateClientReply, error)
-	CalculatePurchase(ctx context.Context, req *CalculatePurchaseQuery) (*CalculatePurchaseReply, error)
-	ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*ApplyPurchaseReply, error)
+	CalculatePurchase(ctx context.Context, req *CalculatePurchaseQuery) (*CalculatePurchaseReply, error) // deprecated
+	ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*ApplyPurchaseReply, error)             // deprecated
 	CalculateReturn(ctx context.Context, req *CalculateReturnQuery) (*CalculateReturnReply, error)
 	ApplyReturn(ctx context.Context, req *ApplyReturnQuery) (*ApplyReturnReply, error)
 	SetOrder(ctx context.Context, req *SetOrderQuery) (*SetOrderReply, error)
@@ -41,6 +41,12 @@ type ClientInterface interface {
 	CancelOrder(ctx context.Context, req *CancelOrderQuery) (*CancelOrderReply, error)
 	AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*AdjustBalanceReply, error)
 	SendConfirmationCode(ctx context.Context, req *SendConfirmationCodeQuery) (*SendConfirmationCodeReply, error)
+	GetHistory(ctx context.Context, req *GetHistoryQuery) (*GetHistoryReply, error)
+	IssuePromocode(ctx context.Context, req *IssuePromocodeQuery) (*IssuePromocodeReply, error)
+	RevertPurchase(ctx context.Context, req *RevertPurchaseQuery) (*RevertPurchaseReply, error)
+	V2CalculatePurchase(ctx context.Context, req *V2CalculatePurchaseRequest) (*V2CalculatePurchaseReply, error)
+	ConfirmTicket(ctx context.Context, req *ConfirmTicketRequest) (*ConfirmTicketReply, error)
+	DiscardTicket(ctx context.Context, req *DiscardTicketRequest) (*DiscardTicketReply, error)
 }
 
 type Client struct {
@@ -258,6 +264,78 @@ func (c *Client) SendConfirmationCode(ctx context.Context, req *SendConfirmation
 		return nil, err
 	}
 	var resp SendConfirmationCodeReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) GetHistory(ctx context.Context, req *GetHistoryQuery) (*GetHistoryReply, error) {
+	respBody, err := c.request(ctx, "/get-history", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp GetHistoryReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) IssuePromocode(ctx context.Context, req *IssuePromocodeQuery) (*IssuePromocodeReply, error) {
+	respBody, err := c.request(ctx, "/issue-promocode", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp IssuePromocodeReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) RevertPurchase(ctx context.Context, req *RevertPurchaseQuery) (*RevertPurchaseReply, error) {
+	respBody, err := c.request(ctx, "/revert-purchase", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp RevertPurchaseReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) V2CalculatePurchase(ctx context.Context, req *V2CalculatePurchaseRequest) (*V2CalculatePurchaseReply, error) {
+	respBody, err := c.request(ctx, "/v2/calculate-purchase", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp V2CalculatePurchaseReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) ConfirmTicket(ctx context.Context, req *ConfirmTicketRequest) (*ConfirmTicketReply, error) {
+	respBody, err := c.request(ctx, "/confirm-ticket", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp ConfirmTicketReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) DiscardTicket(ctx context.Context, req *DiscardTicketRequest) (*DiscardTicketReply, error) {
+	respBody, err := c.request(ctx, "/discard-ticket", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp DiscardTicketReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}

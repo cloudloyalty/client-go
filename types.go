@@ -1,7 +1,9 @@
 package cloudloyalty_client
 
 import (
+	"encoding/json"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -102,3 +104,32 @@ func parseBirthdate(b []byte, child bool) (*time.Time, error) {
 }
 
 type ExtraFields map[string]interface{}
+
+type IntOrAuto struct {
+	json.Unmarshaler
+
+	Auto  bool
+	Value int
+}
+
+func (i *IntOrAuto) UnmarshalJSON(v []byte) error {
+	if strings.EqualFold(string(v), "\"auto\"") {
+		i.Auto = true
+		i.Value = 0
+		return nil
+	}
+	i.Auto = false
+	iv, err := strconv.Atoi(string(v))
+	if err != nil {
+		return err
+	}
+	i.Value = iv
+	return nil
+}
+
+func (i *IntOrAuto) MarshalJSON() ([]byte, error) {
+	if i.Auto {
+		return []byte("\"auto\""), nil
+	}
+	return []byte(strconv.Itoa(i.Value)), nil
+}
