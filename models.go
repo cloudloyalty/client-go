@@ -450,12 +450,12 @@ type SendConfirmationCodeReply struct {
 
 type GetHistoryQuery struct {
 	Client     ClientQuery
-	Pagination *PaginationQuery `json:"pagination"`
+	Pagination *PaginationQuery `json:"pagination,omitempty"`
 }
 
 type PaginationQuery struct {
-	Limit  int `json:"limit"`
-	Offset int `json:"offset"`
+	Limit  int `json:"limit,omitempty"`
+	Offset int `json:"offset,omitempty"`
 }
 
 type GetHistoryReply struct {
@@ -505,7 +505,7 @@ type PaginationReply struct {
 // issue-promocode
 
 type IssuePromocodeQuery struct {
-	Client *ClientQuery `json:"client"`
+	Client *ClientQuery `json:"client,omitempty"`
 	Code   string       `json:"code"`
 }
 
@@ -523,8 +523,8 @@ type RevertPurchaseTransaction struct {
 	ID         string `json:"id"`
 	ExecutedAt string `json:"executedAt"`
 	PurchaseID string `json:"purchaseId"`
-	Cashier    string `json:"cashier"`
-	CashierID  string `json:"cashierId"`
+	Cashier    string `json:"cashier,omitempty"`
+	CashierID  string `json:"cashierId,omitempty"`
 }
 
 type RevertPurchaseReply struct {

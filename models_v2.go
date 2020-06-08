@@ -17,8 +17,8 @@ type SetPurchaseRequest struct {
 
 type ConfirmTicketRequest struct {
 	TxID       string  `json:"txid"`
-	SessionNum *string `json:"sessionNum"`
-	ReceiptNum *string `json:"receiptNum"`
+	SessionNum *string `json:"sessionNum,omitempty"`
+	ReceiptNum *string `json:"receiptNum,omitempty"`
 	Ticket     string  `json:"ticket"`
 }
 
@@ -35,43 +35,43 @@ type DiscardTicketReply struct {
 }
 
 type CalculationQuery struct {
-	Client            *ClientQuery          `json:"client"`
+	Client            *ClientQuery          `json:"client,omitempty"`
 	Shop              ShopQuery             `json:"shop"`
-	Cashier           *CashierQuery         `json:"cashier"`
-	ExecutedAt        *time.Time            `json:"executedAt"`
-	OrderID           string                `json:"orderId"`
+	Cashier           *CashierQuery         `json:"cashier,omitempty"`
+	ExecutedAt        *time.Time            `json:"executedAt,omitempty"`
+	OrderID           string                `json:"orderId,omitempty"`
 	Rows              []CalculationQueryRow `json:"rows"`
-	ApplyBonuses      *IntOrAuto            `json:"applyBonuses"`
-	CollectBonuses    *IntOrAuto            `json:"collectBonuses"`
-	ApplyFactor       *decimal.Decimal      `json:"applyFactor"`
-	CollectFactor     *decimal.Decimal      `json:"collectFactor"`
-	Promocode         string                `json:"promocode"`
-	DiscountRoundStep *float64              `json:"discountRoundStep"`
+	ApplyBonuses      *IntOrAuto            `json:"applyBonuses,omitempty"`
+	CollectBonuses    *IntOrAuto            `json:"collectBonuses,omitempty"`
+	ApplyFactor       *decimal.Decimal      `json:"applyFactor,omitempty"`
+	CollectFactor     *decimal.Decimal      `json:"collectFactor,omitempty"`
+	Promocode         string                `json:"promocode,omitempty"`
+	DiscountRoundStep *float64              `json:"discountRoundStep,omitempty"`
 }
 
 type CalculationQueryRow struct {
-	ID               *string                    `json:"id"`
+	ID               *string                    `json:"id,omitempty"`
 	Product          CalculationQueryRowProduct `json:"product"`
 	Qty              float64                    `json:"qty"`
-	AutoDiscount     decimal.Decimal            `json:"autoDiscount"`
-	ManualDiscount   decimal.Decimal            `json:"manualDiscount"`
-	NoApplyBonuses   bool                       `json:"noApplyBonuses"`
-	NoCollectBonuses bool                       `json:"noCollectBonuses"`
-	NoPromocode      bool                       `json:"noPromocode"`
-	NoOffer          bool                       `json:"noOffer"`
-	MaxDiscount      *decimal.Decimal           `json:"maxDiscount"`
+	AutoDiscount     decimal.Decimal            `json:"autoDiscount,omitempty"`
+	ManualDiscount   decimal.Decimal            `json:"manualDiscount,omitempty"`
+	NoApplyBonuses   bool                       `json:"noApplyBonuses,omitempty"`
+	NoCollectBonuses bool                       `json:"noCollectBonuses,omitempty"`
+	NoPromocode      bool                       `json:"noPromocode,omitempty"`
+	NoOffer          bool                       `json:"noOffer,omitempty"`
+	MaxDiscount      *decimal.Decimal           `json:"maxDiscount,omitempty"`
 }
 
 type CalculationQueryRowProduct struct {
-	ExternalID         string           `json:"externalId"`
+	ExternalID         string           `json:"externalId,omitempty"`
 	SKU                string           `json:"sku"`
-	Title              string           `json:"title"`
-	Category           string           `json:"category"`
-	CategoryExternalID string           `json:"categoryExternalId"`
-	BuyingPrice        *decimal.Decimal `json:"buyingPrice"`
+	Title              string           `json:"title,omitempty"`
+	Category           string           `json:"category,omitempty"`
+	CategoryExternalID string           `json:"categoryExternalId,omitempty"`
+	BuyingPrice        *decimal.Decimal `json:"buyingPrice,omitempty"`
 	BlackPrice         decimal.Decimal  `json:"blackPrice"`
-	RedPrice           *decimal.Decimal `json:"redPrice"`
-	MinPrice           decimal.Decimal  `json:"minPrice"`
+	RedPrice           *decimal.Decimal `json:"redPrice,omitempty"`
+	MinPrice           decimal.Decimal  `json:"minPrice,omitempty"`
 }
 
 type V2CalculatePurchaseReply struct {
