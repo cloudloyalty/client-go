@@ -25,7 +25,7 @@ type Config struct {
 
 type ProcessingError struct {
 	error
-	Code int
+	*ErrorReply
 }
 
 type ClientInterface interface {
@@ -120,8 +120,8 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 
 	if serverError.ErrorCode > 0 {
 		return nil, &ProcessingError{
-			error: errors.New(serverError.Description),
-			Code:  serverError.ErrorCode,
+			error:      errors.New(serverError.Description),
+			ErrorReply: &serverError,
 		}
 	}
 	return respBody, nil
