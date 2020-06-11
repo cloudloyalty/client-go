@@ -334,7 +334,7 @@ type Item struct {
 	Amount             *decimal.Decimal `json:"amount,omitempty"`
 	Category           string           `json:"category,omitempty"`
 	CategoryExternalID string           `json:"categoryExternalID,omitempty"`
-	MinPrice           decimal.Decimal  `json:"minPrice,omitempty"`
+	MinPrice           *decimal.Decimal `json:"minPrice,omitempty"`
 }
 
 // adjust-balance
