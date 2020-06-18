@@ -65,7 +65,7 @@ type CalculationQueryRow struct {
 type CalculationQueryRowProduct struct {
 	ExternalID         string           `json:"externalId,omitempty"`
 	SKU                string           `json:"sku"`
-	Title              string           `json:"title,omitempty"`
+	Title              string           `json:"title"`
 	Category           string           `json:"category,omitempty"`
 	CategoryExternalID string           `json:"categoryExternalId,omitempty"`
 	BuyingPrice        *decimal.Decimal `json:"buyingPrice,omitempty"`
