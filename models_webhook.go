@@ -24,8 +24,14 @@ type ClientNewEvent struct {
 }
 
 type ClientChangedEvent struct {
-	Client     ClientQuery                  `json:"client"`
+	Client     ClientEventClientQuery       `json:"client"`
 	ClientData ClientChangedEventClientData `json:"clientData"`
+}
+
+type ClientEventClientQuery struct {
+	PhoneNumber string `json:"phoneNumber"`
+	Card        int    `json:"card"`
+	ExternalID  string `json:"externalId"`
 }
 
 type ClientChangedEventClientData struct {
@@ -46,7 +52,7 @@ type ClientChangedEventClientData struct {
 }
 
 type ClientBonusesChangedEvent struct {
-	Client        ClientQuery                      `json:"client"`
+	Client        ClientEventClientQuery           `json:"client"`
 	ClientBonuses ClientBonusesChangedEventBonuses `json:"clientBonuses"`
 }
 
@@ -57,6 +63,6 @@ type ClientBonusesChangedEventBonuses struct {
 }
 
 type ClientEmailSubscriptionChangedEvent struct {
-	Client ClientQuery `json:"client"`
-	Email  string      `json:"email"`
+	Client ClientEventClientQuery `json:"client"`
+	Email  string                 `json:"email"`
 }
