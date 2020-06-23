@@ -43,7 +43,7 @@ type ClientChangedEventClientData struct {
 	PatronymicName    string      `json:"patronymicName"`
 	FullName          string      `json:"fullName"`
 	Gender            int         `json:"gender"`
-	Birthdate         *Birthdate  `json:"birthdate"`
+	Birthdate         string      `json:"birthdate"`
 	Email             string      `json:"email"`
 	Level             int         `json:"level"`
 	IsEmailSubscribed bool        `json:"isEmailSubscribed"`
