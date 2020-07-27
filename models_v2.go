@@ -159,8 +159,8 @@ type ReceiptInfoLineText struct {
 }
 
 type ReceiptInfoLineTable struct {
-	Left  string `json:"align"`
-	Right string `json:"value"`
+	Left  string `json:"left"`
+	Right string `json:"right"`
 }
 
 type ReceiptInfoLineBarcode struct {
