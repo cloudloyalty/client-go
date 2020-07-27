@@ -32,6 +32,10 @@ const (
 	ReceiptInfoLineTypeBarcode = "barcode"
 	ReceiptInfoLineTypeDivider = "divider"
 
+	ReceiptInfoLineTextAlignLeft   = "left"
+	ReceiptInfoLineTextAlignCenter = "center"
+	ReceiptInfoLineTextAlignRight  = "right"
+
 	ReceiptInfoLineBarcodeTypeQR    = "QR"
 	ReceiptInfoLineBarcodeTypeEAN13 = "EAN13"
 )
