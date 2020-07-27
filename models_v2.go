@@ -82,6 +82,7 @@ type SetPurchaseReply struct {
 	ClientBonuses     *ClientBonusesReply `json:"clientBonuses,omitempty"`
 	CalculationResult CalculationResult   `json:"calculationResult"`
 	Ticket            string              `json:"ticket"`
+	ReceiptInfo       []ReceiptInfoLine   `json:"receiptInfo,omitempty"`
 }
 
 type CalculationResult struct {
@@ -143,4 +144,26 @@ type CalculationResultError struct {
 	Code        int    `json:"code"`
 	Description string `json:"description"`
 	Hint        string `json:"hint,omitempty"`
+}
+
+type ReceiptInfoLine struct {
+	Type    string                  `json:"type"`
+	Text    *ReceiptInfoLineText    `json:"text,omitempty"`
+	Table   *ReceiptInfoLineTable   `json:"table,omitempty"`
+	Barcode *ReceiptInfoLineBarcode `json:"barcode,omitempty"`
+}
+
+type ReceiptInfoLineText struct {
+	Align string `json:"align,omitempty"`
+	Value string `json:"value"`
+}
+
+type ReceiptInfoLineTable struct {
+	Left  string `json:"align"`
+	Right string `json:"value"`
+}
+
+type ReceiptInfoLineBarcode struct {
+	Type string `json:"type"`
+	Data string `json:"data"`
 }

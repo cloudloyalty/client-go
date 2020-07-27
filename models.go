@@ -535,3 +535,26 @@ type RevertPurchaseOperationResult struct {
 	RefundedBonuses  int `json:"refundedBonuses"`
 	CancelledBonuses int `json:"cancelledBonuses"`
 }
+
+// get-settings
+type GetSettingsQuery struct {
+	Shop *ShopQuery `json:"shop,omitempty"`
+}
+
+type GetSettingsReply struct {
+	PhoneVerification         bool                     `json:"phoneVerification"`
+	BonusApplyingConfirmation bool                     `json:"bonusApplyingConfirmation"`
+	ClientFieldCardRequired   bool                     `json:"clientFieldCardRequired"`
+	ClientFieldSurname        bool                     `json:"clientFieldSurname"`
+	ClientFieldPatronymic     bool                     `json:"clientFieldPatronymic"`
+	ClientFieldChildren       bool                     `json:"clientFieldChildren"`
+	ClientExtraFields         []ClientExtraFieldConfig `json:"clientExtraFields,omitempty"`
+	ExtraProperties           ExtraFields              `json:"extraProperties,omitempty"`
+}
+
+type ClientExtraFieldConfig struct {
+	Code    string   `json:"code"`
+	Label   string   `json:"label"`
+	Type    string   `json:"type"`
+	Options []string `json:"options,omitempty"`
+}

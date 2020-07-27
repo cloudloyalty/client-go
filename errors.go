@@ -28,7 +28,33 @@ const (
 	ErrPromocodeRequiresClient = 37
 )
 
-var russianText = map[int]string{
+var DescriptionEN = map[int]string{
+	ErrGeneralError:            "Request has not been complete",
+	ErrMalformedRequest:        "Malformed request or incorrect JSON",
+	ErrClientNotFound:          "Client not found",
+	ErrClientSuspended:         "Client suspended",
+	ErrShopNotFound:            "Shop not found",
+	ErrIncorrectBonusAmount:    "Too many bonuses requested",
+	ErrIncorrectReturnItem:     "Returning item wasn't purchased",
+	ErrIncorrectReturnAmount:   "Refund amount is greater than amount of purchase",
+	ErrAlreadyProcessed:        "Transaction with this TxID already processed",
+	ErrIncorrectPhone:          "Incorrect phone number",
+	ErrPurchaseNotFound:        "Purchase transaction not found",
+	ErrDuplicatingPhone:        "Client with this phone number already exists",
+	ErrDuplicatingCard:         "Client with this card already exists",
+	ErrTooManyCodeRequests:     "Too many confirmation codes requested",
+	ErrEmptyPhone:              "Client has no phone number specified",
+	ErrDuplicatingExternalID:   "Client with this externalId already exists",
+	ErrOrderNotFound:           "Order not found",
+	ErrOrderAlreadyProcessed:   "Order already processed",
+	ErrPromocodeNotFound:       "Promocode does not exist",
+	ErrPromocodeNotApplicable:  "Promocode cannot be applied to this purchase",
+	ErrPromocodeAlreadyUsed:    "Promocode has already been used maximum times",
+	ErrPromocodeExpired:        "Promocode expired or not yet started to operate",
+	ErrPromocodeRequiresClient: "Promocode requires client to be authorized",
+}
+
+var DescriptionRU = map[int]string{
 	ErrGeneralError:            "Чек не обработан процессингом или обработан с ошибкой",
 	ErrMalformedRequest:        "В запросе к процессингу обнаружена ошибка или неверный вид JSON",
 	ErrClientNotFound:          "Клиент не найден",
@@ -54,8 +80,15 @@ var russianText = map[int]string{
 	ErrPromocodeRequiresClient: "Промокод работает только совместно с бонусным счетом",
 }
 
+func Description(code int) string {
+	if desc, ok := DescriptionEN[code]; ok {
+		return desc
+	}
+	return fmt.Sprintf("Error #%d", code)
+}
+
 func RussianDescription(code int) string {
-	if desc, ok := russianText[code]; ok {
+	if desc, ok := DescriptionRU[code]; ok {
 		return desc
 	}
 	return fmt.Sprintf("Ошибка #%d", code)
