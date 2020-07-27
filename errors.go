@@ -12,6 +12,7 @@ const (
 	ErrIncorrectReturnItem     = 10
 	ErrIncorrectReturnAmount   = 11
 	ErrAlreadyProcessed        = 17
+	ErrEmptyRowsArray          = 18
 	ErrIncorrectPhone          = 20
 	ErrPurchaseNotFound        = 21
 	ErrDuplicatingPhone        = 24
@@ -38,6 +39,7 @@ var DescriptionEN = map[int]string{
 	ErrIncorrectReturnItem:     "Returning item wasn't purchased",
 	ErrIncorrectReturnAmount:   "Refund amount exceeds the amount of the purchase",
 	ErrAlreadyProcessed:        "Purchase with this TxID already processed",
+	ErrEmptyRowsArray:          "Purchase must include at least one item",
 	ErrIncorrectPhone:          "Incorrect phone number",
 	ErrPurchaseNotFound:        "Purchase not found",
 	ErrDuplicatingPhone:        "Client with this phone number already exists",
@@ -64,6 +66,7 @@ var DescriptionRU = map[int]string{
 	ErrIncorrectReturnItem:     "Возвращаемый товар не найден в чеке продажи",
 	ErrIncorrectReturnAmount:   "Сумма возврата больше суммы продажи",
 	ErrAlreadyProcessed:        "Чек с данным номером уже обработан",
+	ErrEmptyRowsArray:          "Продажа должна включать хотя бы один товар",
 	ErrIncorrectPhone:          "Номер телефона клиента не валиден",
 	ErrPurchaseNotFound:        "Продажа не найдена",
 	ErrDuplicatingPhone:        "Клиент с таким номером телефона уже существует",
