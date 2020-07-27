@@ -19,6 +19,23 @@ const (
 	GenderFemale  = 2
 )
 
+const (
+	ExtraFieldTypeText      = "text"
+	ExtraFieldTypeNumeric   = "numeric"
+	ExtraFieldTypeStaticSet = "static-set"
+	ExtraFieldTypeSet       = "set"
+)
+
+const (
+	ReceiptInfoLineTypeText    = "text"
+	ReceiptInfoLineTypeTable   = "table"
+	ReceiptInfoLineTypeBarcode = "barcode"
+	ReceiptInfoLineTypeDivider = "divider"
+
+	ReceiptInfoLineBarcodeTypeQR    = "QR"
+	ReceiptInfoLineBarcodeTypeEAN13 = "EAN13"
+)
+
 type ErrorReply struct {
 	ErrorCode   int    `json:"errorCode"`
 	Description string `json:"description"`
