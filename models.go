@@ -553,8 +553,8 @@ type GetSettingsReply struct {
 }
 
 type ClientExtraFieldConfig struct {
-	Code    string   `json:"code"`
-	Label   string   `json:"label"`
+	Name    string   `json:"name"`
+	Title   string   `json:"title"`
 	Type    string   `json:"type"`
 	Options []string `json:"options,omitempty"`
 }
