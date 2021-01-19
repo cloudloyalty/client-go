@@ -90,6 +90,7 @@ type CalculationResult struct {
 	Summary   CalculationResultSummary    `json:"summary"`
 	Bonuses   *CalculationResultBonuses   `json:"bonuses,omitempty"`
 	Promocode *CalculationResultPromocode `json:"promocode,omitempty"`
+	GiftCard  *CalculationResultPromocode `json:"giftCard,omitempty"`
 }
 
 type CalculationResultRow struct {
@@ -136,7 +137,6 @@ type CalculationResultBonuses struct {
 
 type CalculationResultPromocode struct {
 	Applied bool                    `json:"applied"`
-	ID      int                     `json:"-"`
 	Error   *CalculationResultError `json:"error,omitempty"`
 }
 

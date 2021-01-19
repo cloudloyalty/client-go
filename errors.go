@@ -27,6 +27,12 @@ const (
 	ErrPromocodeAlreadyUsed    = 35
 	ErrPromocodeExpired        = 36
 	ErrPromocodeRequiresClient = 37
+	ErrGiftCardNotFound        = 40
+	ErrGiftCardNotApplicable   = 41
+	ErrGiftCardNotActivated    = 42
+	ErrGiftCardExpired         = 43
+	ErrGiftCardBlocked         = 44
+	ErrGiftCardNoFunds         = 45
 )
 
 var DescriptionEN = map[int]string{
@@ -54,6 +60,12 @@ var DescriptionEN = map[int]string{
 	ErrPromocodeAlreadyUsed:    "Promocode has already been used maximum number of times",
 	ErrPromocodeExpired:        "Promocode validity time is over or not yet started",
 	ErrPromocodeRequiresClient: "Promocode requires client to be authorized",
+	ErrGiftCardNotFound:        "Gift card does not exist",
+	ErrGiftCardNotApplicable:   "Gift card cannot be applied to this purchase",
+	ErrGiftCardNotActivated:    "Gift card is not yet activated",
+	ErrGiftCardExpired:         "Gift card expired",
+	ErrGiftCardBlocked:         "Gift card blocked",
+	ErrGiftCardNoFunds:         "Gift card ran out of funds",
 }
 
 var DescriptionRU = map[int]string{
@@ -81,6 +93,12 @@ var DescriptionRU = map[int]string{
 	ErrPromocodeAlreadyUsed:    "Промокод уже использован максимальное число раз",
 	ErrPromocodeExpired:        "Время действия промокода еще не наступило или уже прошло",
 	ErrPromocodeRequiresClient: "Промокод работает только совместно с бонусным счетом",
+	ErrGiftCardNotFound:        "Подарочная карта не найдена",
+	ErrGiftCardNotApplicable:   "Условия применения подарочной карты не выполнены",
+	ErrGiftCardNotActivated:    "Подарочная карта еще не активирована",
+	ErrGiftCardExpired:         "Срок действия подарочной карты истёк или еще не наступил",
+	ErrGiftCardBlocked:         "Подарочная карта заблокирована",
+	ErrGiftCardNoFunds:         "На подарочной карте нет средств",
 }
 
 func Description(code int) string {
