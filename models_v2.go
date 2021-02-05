@@ -72,6 +72,7 @@ type CalculationQueryRowProduct struct {
 	BlackPrice         decimal.Decimal  `json:"blackPrice"`
 	RedPrice           *decimal.Decimal `json:"redPrice,omitempty"`
 	MinPrice           decimal.Decimal  `json:"minPrice,omitempty"`
+	DiscountRoundStep  *float64         `json:"discountRoundStep,omitempty"`
 }
 
 type V2CalculatePurchaseReply struct {
