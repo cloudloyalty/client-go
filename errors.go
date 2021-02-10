@@ -33,6 +33,7 @@ const (
 	ErrGiftCardExpired         = 43
 	ErrGiftCardBlocked         = 44
 	ErrGiftCardNoFunds         = 45
+	ErrGiftCardAlreadySold     = 46
 )
 
 var DescriptionEN = map[int]string{
@@ -66,6 +67,7 @@ var DescriptionEN = map[int]string{
 	ErrGiftCardExpired:         "Gift card expired",
 	ErrGiftCardBlocked:         "Gift card blocked",
 	ErrGiftCardNoFunds:         "Gift card ran out of funds",
+	ErrGiftCardAlreadySold:     "Gift card already sold",
 }
 
 var DescriptionRU = map[int]string{
@@ -99,6 +101,7 @@ var DescriptionRU = map[int]string{
 	ErrGiftCardExpired:         "Срок действия подарочной карты истёк или еще не наступил",
 	ErrGiftCardBlocked:         "Подарочная карта заблокирована",
 	ErrGiftCardNoFunds:         "На подарочной карте нет средств",
+	ErrGiftCardAlreadySold:     "Подарочная карта уже продана",
 }
 
 func Description(code int) string {
