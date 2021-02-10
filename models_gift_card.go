@@ -6,12 +6,12 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type SellGiftCardRequest struct {
+type ActivateGiftCardRequest struct {
 	TxID     string        `json:"txid"`
 	GiftCard GiftCardQuery `json:"giftCard"`
 }
 
-type SellGiftCardReply struct {
+type ActivateGiftCardReply struct {
 	GiftCard GiftCardReply `json:"giftCard"`
 }
 
@@ -23,5 +23,5 @@ type GiftCardQuery struct {
 type GiftCardReply struct {
 	Number     string          `json:"number,omitempty"`
 	InitAmount decimal.Decimal `json:"initAmount"`
-	ExpiredAt  *time.Time      `json:"expiredAt,omitempty"`
+	ValidUntil *time.Time      `json:"validUntil,omitempty"`
 }
