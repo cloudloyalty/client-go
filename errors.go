@@ -9,8 +9,10 @@ const (
 	ErrClientSuspended          = 4
 	ErrShopNotFound             = 5
 	ErrIncorrectBonusAmount     = 6
+	ErrTooManyPurchases         = 7
 	ErrIncorrectReturnItem      = 10
 	ErrIncorrectReturnAmount    = 11
+	ErrIncorrectReturnPurchase  = 13
 	ErrAlreadyProcessed         = 17
 	ErrEmptyRowsArray           = 18
 	ErrIncorrectPhone           = 20
@@ -39,13 +41,15 @@ const (
 
 var DescriptionEN = map[int]string{
 	ErrGeneralError:             "Request not processed or completed with error",
-	ErrMalformedRequest:         "Malformed request or incorrect JSON",
+	ErrMalformedRequest:         "Malformed request",
 	ErrClientNotFound:           "Client not found",
 	ErrClientSuspended:          "Client account suspended",
 	ErrShopNotFound:             "Shop not found",
 	ErrIncorrectBonusAmount:     "Too many bonuses requested",
+	ErrTooManyPurchases:         "Exceeded maximum number of purchases",
 	ErrIncorrectReturnItem:      "Returning item wasn't purchased",
 	ErrIncorrectReturnAmount:    "Refund amount exceeds the amount of the purchase",
+	ErrIncorrectReturnPurchase:  "No such purchase for the return",
 	ErrAlreadyProcessed:         "Purchase with this TxID already processed",
 	ErrEmptyRowsArray:           "Purchase must include at least one item",
 	ErrIncorrectPhone:           "Incorrect phone number",
@@ -74,13 +78,15 @@ var DescriptionEN = map[int]string{
 
 var DescriptionRU = map[int]string{
 	ErrGeneralError:             "Чек не обработан процессингом или обработан с ошибкой",
-	ErrMalformedRequest:         "В запросе к процессингу обнаружена ошибка или неверный вид JSON",
+	ErrMalformedRequest:         "Запрос к процессингу составлен некорректно",
 	ErrClientNotFound:           "Клиент не найден",
 	ErrClientSuspended:          "Аккаунт клиента заблокирован",
 	ErrShopNotFound:             "Не найден магазин",
 	ErrIncorrectBonusAmount:     "Списание бонусов превышает допустимое значение",
+	ErrTooManyPurchases:         "Превышено количество покупок",
 	ErrIncorrectReturnItem:      "Возвращаемый товар не найден в чеке продажи",
 	ErrIncorrectReturnAmount:    "Сумма возврата больше суммы продажи",
+	ErrIncorrectReturnPurchase:  "Не найдена продажа для возврата",
 	ErrAlreadyProcessed:         "Чек с данным номером уже обработан",
 	ErrEmptyRowsArray:           "Продажа должна включать хотя бы один товар",
 	ErrIncorrectPhone:           "Номер телефона клиента не валиден",
