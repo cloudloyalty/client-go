@@ -36,7 +36,8 @@ type ClientInterface interface {
 	ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*ApplyPurchaseReply, error)             // deprecated
 	CalculateReturn(ctx context.Context, req *CalculateReturnQuery) (*CalculateReturnReply, error)
 	ApplyReturn(ctx context.Context, req *ApplyReturnQuery) (*ApplyReturnReply, error)
-	SetOrder(ctx context.Context, req *SetOrderQuery) (*SetOrderReply, error)
+	SetOrder(ctx context.Context, req *SetOrderQuery) (*SetOrderReply, error) // deprecated
+	V2SetOrder(ctx context.Context, req *V2SetOrderRequest) (*V2SetOrderReply, error)
 	ConfirmOrder(ctx context.Context, req *ConfirmOrderQuery) (*ConfirmOrderReply, error)
 	CancelOrder(ctx context.Context, req *CancelOrderQuery) (*CancelOrderReply, error)
 	AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*AdjustBalanceReply, error)
@@ -165,6 +166,7 @@ func (c *Client) UpdateClient(ctx context.Context, req *UpdateClientQuery) (*Upd
 	return &resp, nil
 }
 
+// CalculatePurchase deprecated
 func (c *Client) CalculatePurchase(ctx context.Context, req *CalculatePurchaseQuery) (*CalculatePurchaseReply, error) {
 	respBody, err := c.request(ctx, "/calculate-purchase", req)
 	if err != nil {
@@ -177,6 +179,7 @@ func (c *Client) CalculatePurchase(ctx context.Context, req *CalculatePurchaseQu
 	return &resp, nil
 }
 
+// ApplyPurchase deprecated
 func (c *Client) ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*ApplyPurchaseReply, error) {
 	respBody, err := c.request(ctx, "/apply-purchase", req)
 	if err != nil {
@@ -213,12 +216,25 @@ func (c *Client) ApplyReturn(ctx context.Context, req *ApplyReturnQuery) (*Apply
 	return &resp, nil
 }
 
+// SetOrder deprecated
 func (c *Client) SetOrder(ctx context.Context, req *SetOrderQuery) (*SetOrderReply, error) {
 	respBody, err := c.request(ctx, "/set-order", req)
 	if err != nil {
 		return nil, err
 	}
 	var resp SetOrderReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) V2SetOrder(ctx context.Context, req *V2SetOrderRequest) (*V2SetOrderReply, error) {
+	respBody, err := c.request(ctx, "/v2/set-order", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp V2SetOrderReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}

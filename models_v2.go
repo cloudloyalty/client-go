@@ -168,3 +168,13 @@ type ReceiptInfoLineBarcode struct {
 	Type string `json:"type"`
 	Data string `json:"data"`
 }
+
+type V2SetOrderRequest struct {
+	OrderID          string           `json:"orderId"`
+	CalculationQuery CalculationQuery `json:"calculationQuery"`
+}
+
+type V2SetOrderReply struct {
+	ClientBonuses     *ClientBonusesReply `json:"clientBonuses,omitempty"`
+	CalculationResult CalculationResult   `json:"calculationResult"`
+}

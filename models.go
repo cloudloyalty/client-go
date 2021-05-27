@@ -154,10 +154,12 @@ type UpdateClientReply struct {
 
 // calculate-purchase
 
+// deprecated
 type CalculatePurchaseQuery struct {
 	Calculate CalculatePurchaseQueryCalculate `json:"calculate"`
 }
 
+// deprecated
 type CalculatePurchaseQueryCalculate struct {
 	PhoneNumber       string           `json:"phoneNumber,omitempty"`
 	Card              string           `json:"card,omitempty"`
@@ -177,6 +179,7 @@ type CalculatePurchaseQueryCalculate struct {
 	DoCollectBonuses  *bool            `json:"doCollectBonuses,omitempty"` // obsolete
 }
 
+// deprecated
 type Unit struct {
 	ExternalID         string           `json:"externalId,omitempty"`
 	Sku                string           `json:"sku"`
@@ -190,12 +193,14 @@ type Unit struct {
 	MinPrice           decimal.Decimal  `json:"minPrice,omitempty"`
 }
 
+// deprecated
 type CalculatePurchaseReply struct {
 	Calculation     CalculatePurchaseReplyCalculate `json:"calculation"`
 	CalculatedUnits map[string]CalculatedUnit       `json:"calculatedUnits"`
 	ClientBonuses   ClientBonusesReply              `json:"clientBonuses"`
 }
 
+// deprecated
 type CalculatedUnit struct {
 	IsPromocodeApplicable bool            `json:"isPromocodeApplicable"`
 	PromocodeDiscount     decimal.Decimal `json:"promocodeDiscount"`
@@ -206,6 +211,7 @@ type CalculatedUnit struct {
 	CalculatedAmount      decimal.Decimal `json:"calculatedAmount"`
 }
 
+// deprecated
 type CalculatePurchaseReplyCalculate struct {
 	AppliedBonuses     int             `json:"appliedBonuses"`
 	CollectedBonuses   int             `json:"collectedBonuses"`
@@ -222,10 +228,12 @@ type CalculatePurchaseReplyCalculate struct {
 
 // apply-purchase
 
+// deprecated
 type ApplyPurchaseQuery struct {
 	Transaction ApplyPurchaseTransaction `json:"transaction"`
 }
 
+// deprecated
 type ApplyPurchaseTransaction struct {
 	PhoneNumber                string                             `json:"phoneNumber,omitempty"`
 	Card                       string                             `json:"card,omitempty"`
@@ -251,15 +259,18 @@ type ApplyPurchaseTransaction struct {
 	ConfirmationCode           string                             `json:"confirmationCode,omitempty"`
 }
 
+// deprecated
 type ApplyPurchaseTransactionPromocode struct {
 	Promocode         string          `json:"promocode"`
 	PromocodeDiscount decimal.Decimal `json:"promocodeDiscount"`
 }
 
+// deprecated
 type ApplyPurchaseReply struct {
 	Confirmation ApplyPurchaseReplyConfirmation `json:"confirmation"`
 }
 
+// deprecated
 type ApplyPurchaseReplyConfirmation struct {
 	PhoneNumber string                    `json:"phoneNumber"`
 	PurchaseID  string                    `json:"purchaseId"`
@@ -268,6 +279,7 @@ type ApplyPurchaseReplyConfirmation struct {
 	Bonuses     ApplyPurchaseReplyBonuses `json:"bonuses"`
 }
 
+// deprecated
 type ApplyPurchaseReplyBonuses struct {
 	Applied   int `json:"applied"`
 	Collected int `json:"collected"`
@@ -391,11 +403,13 @@ type ClientBonusesReply struct {
 
 // set-order
 
+// deprecated
 type SetOrderQuery struct {
 	Client ClientQuery `json:"client"`
 	Order  OrderQuery  `json:"order"`
 }
 
+// deprecated
 type OrderQuery struct {
 	ID          string           `json:"id"`
 	ExecutedAt  *time.Time       `json:"executedAt,omitempty"`
@@ -407,6 +421,7 @@ type OrderQuery struct {
 	Items       []Item           `json:"items,omitempty"`
 }
 
+// deprecated
 type SetOrderLoyalty struct {
 	Action                     string            `json:"action"`
 	ApplyingAmount             *decimal.Decimal  `json:"applyingAmount,omitempty"`
@@ -417,11 +432,13 @@ type SetOrderLoyalty struct {
 	ConfirmationCode           string            `json:"confirmationCode,omitempty"`
 }
 
+// deprecated
 type SetOrderReply struct {
 	OperationResult SetOrderOperationResult `json:"operationResult"`
 	ClientBonuses   ClientBonusesReply      `json:"clientBonuses"`
 }
 
+// deprecated
 type SetOrderOperationResult struct {
 	AppliedBonuses   int             `json:"appliedBonuses"`
 	CollectedBonuses int             `json:"collectedBonuses"`
