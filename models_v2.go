@@ -7,6 +7,7 @@ import (
 )
 
 type V2CalculatePurchaseRequest struct {
+	OrderID          string           `json:"orderId"`
 	CalculationQuery CalculationQuery `json:"calculationQuery"`
 }
 
