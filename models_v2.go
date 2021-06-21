@@ -7,7 +7,7 @@ import (
 )
 
 type V2CalculatePurchaseRequest struct {
-	OrderID          string           `json:"orderId"`
+	OrderID          string           `json:"orderId,omitempty"`
 	CalculationQuery CalculationQuery `json:"calculationQuery"`
 }
 
@@ -40,7 +40,6 @@ type CalculationQuery struct {
 	Shop              ShopQuery             `json:"shop"`
 	Cashier           *CashierQuery         `json:"cashier,omitempty"`
 	ExecutedAt        *time.Time            `json:"executedAt,omitempty"`
-	OrderID           string                `json:"orderId,omitempty"`
 	Rows              []CalculationQueryRow `json:"rows"`
 	ApplyBonuses      *IntOrAuto            `json:"applyBonuses,omitempty"`
 	CollectBonuses    *IntOrAuto            `json:"collectBonuses,omitempty"`
