@@ -259,6 +259,19 @@ type ApplyPurchaseTransaction struct {
 	ConfirmationCode           string                             `json:"confirmationCode,omitempty"`
 }
 
+type Item struct {
+	ExternalID         string           `json:"externalId,omitempty"`
+	SKU                string           `json:"sku"`
+	ItemTitle          string           `json:"itemTitle"`
+	ItemCount          float64          `json:"itemCount"`
+	BuyingPrice        *decimal.Decimal `json:"buyingPrice,omitempty"`
+	Price              decimal.Decimal  `json:"price"`
+	Amount             *decimal.Decimal `json:"amount,omitempty"`
+	Category           string           `json:"category,omitempty"`
+	CategoryExternalID string           `json:"categoryExternalID,omitempty"`
+	MinPrice           *decimal.Decimal `json:"minPrice,omitempty"`
+}
+
 // deprecated
 type ApplyPurchaseTransactionPromocode struct {
 	Promocode         string          `json:"promocode"`
@@ -301,7 +314,7 @@ type CalculateReturnQueryCalculate struct {
 	ExternalID   string          `json:"externalId,omitempty"`
 	PurchaseID   string          `json:"purchaseId"`
 	RefundAmount decimal.Decimal `json:"refundAmount"`
-	Items        []Item          `json:"items,omitempty"`
+	Items        []ReturnItem    `json:"items,omitempty"`
 }
 
 // CalculateReturnReply is a response model for /calculate-return API
@@ -340,7 +353,12 @@ type ApplyReturnTransaction struct {
 	Cashier           string           `json:"cashier,omitempty"`
 	CashierID         string           `json:"cashierId,omitempty"`
 	RefundAmount      decimal.Decimal  `json:"refundAmount"`
-	Items             []Item           `json:"items,omitempty"`
+	Items             []ReturnItem     `json:"items,omitempty"`
+}
+
+type ReturnItem struct {
+	SKU       string  `json:"sku"`
+	ItemCount float64 `json:"itemCount"`
 }
 
 // ApplyReturnReply is a response model for /apply-return API
@@ -355,19 +373,6 @@ type ApplyReturnReplyConfirmation struct {
 	RefundAmount     decimal.Decimal `json:"refundAmount"`
 	RecoveredBonuses int             `json:"recoveredBonuses"`
 	CancelledBonuses int             `json:"cancelledBonuses"`
-}
-
-type Item struct {
-	ExternalID         string           `json:"externalId,omitempty"`
-	SKU                string           `json:"sku"`
-	ItemTitle          string           `json:"itemTitle,omitempty"`
-	ItemCount          float64          `json:"itemCount"`
-	BuyingPrice        *decimal.Decimal `json:"buyingPrice,omitempty"`
-	Price              decimal.Decimal  `json:"price,omitempty"`
-	Amount             *decimal.Decimal `json:"amount,omitempty"`
-	Category           string           `json:"category,omitempty"`
-	CategoryExternalID string           `json:"categoryExternalID,omitempty"`
-	MinPrice           *decimal.Decimal `json:"minPrice,omitempty"`
 }
 
 // adjust-balance
