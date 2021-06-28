@@ -360,10 +360,10 @@ type ApplyReturnReplyConfirmation struct {
 type Item struct {
 	ExternalID         string           `json:"externalId,omitempty"`
 	SKU                string           `json:"sku"`
-	ItemTitle          string           `json:"itemTitle"`
+	ItemTitle          string           `json:"itemTitle,omitempty"`
 	ItemCount          float64          `json:"itemCount"`
 	BuyingPrice        *decimal.Decimal `json:"buyingPrice,omitempty"`
-	Price              decimal.Decimal  `json:"price"`
+	Price              decimal.Decimal  `json:"price,omitempty"`
 	Amount             *decimal.Decimal `json:"amount,omitempty"`
 	Category           string           `json:"category,omitempty"`
 	CategoryExternalID string           `json:"categoryExternalID,omitempty"`
