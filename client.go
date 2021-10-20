@@ -51,6 +51,7 @@ type ClientInterface interface {
 	DiscardTicket(ctx context.Context, req *DiscardTicketRequest) (*DiscardTicketReply, error)
 	GetSettings(ctx context.Context, req *GetSettingsQuery) (*GetSettingsReply, error)
 	ActivateGiftCard(ctx context.Context, req *ActivateGiftCardRequest) (*ActivateGiftCardReply, error)
+	GenerateGiftCard(ctx context.Context, req *GenerateGiftCardRequest) (*GenerateGiftCardReply, error)
 }
 
 type Client struct {
@@ -391,6 +392,18 @@ func (c *Client) ActivateGiftCard(ctx context.Context, req *ActivateGiftCardRequ
 		return nil, err
 	}
 	var resp ActivateGiftCardReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) GenerateGiftCard(ctx context.Context, req *GenerateGiftCardRequest) (*GenerateGiftCardReply, error) {
+	respBody, err := c.request(ctx, "/generate-gift-card", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp GenerateGiftCardReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}

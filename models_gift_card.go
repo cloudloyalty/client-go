@@ -15,13 +15,22 @@ type ActivateGiftCardReply struct {
 	GiftCard GiftCardReply `json:"giftCard"`
 }
 
+type GenerateGiftCardRequest struct {
+	Code string `json:"code"`
+}
+
+type GenerateGiftCardReply struct {
+	GiftCard GiftCardReply `json:"giftCard"`
+}
+
 type GiftCardQuery struct {
 	SKU  string `json:"sku"`
 	Code string `json:"code"`
 }
 
 type GiftCardReply struct {
-	Number     string          `json:"number,omitempty"`
+	Number     string          `json:"number"`
+	Code       string          `json:"code"`
 	InitAmount decimal.Decimal `json:"initAmount"`
 	ValidUntil *time.Time      `json:"validUntil,omitempty"`
 }
