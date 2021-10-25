@@ -40,6 +40,7 @@ type CalculationQuery struct {
 	Shop              ShopQuery             `json:"shop"`
 	Cashier           *CashierQuery         `json:"cashier,omitempty"`
 	ExecutedAt        *time.Time            `json:"executedAt,omitempty"`
+	OrderID           string                `json:"orderId,omitempty"` // deprecated
 	Rows              []CalculationQueryRow `json:"rows"`
 	ApplyBonuses      *IntOrAuto            `json:"applyBonuses,omitempty"`
 	CollectBonuses    *IntOrAuto            `json:"collectBonuses,omitempty"`
