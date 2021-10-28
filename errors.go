@@ -37,6 +37,7 @@ const (
 	ErrGiftCardNoFunds          = 45
 	ErrGiftCardAlreadySold      = 46
 	ErrGiftCardAlreadyActivated = 47
+	ErrDuplicatingEmail         = 48
 )
 
 var DescriptionEN = map[int]string{
@@ -74,6 +75,7 @@ var DescriptionEN = map[int]string{
 	ErrGiftCardNoFunds:          "Gift card ran out of funds",
 	ErrGiftCardAlreadySold:      "Gift card already sold",
 	ErrGiftCardAlreadyActivated: "Gift card already activated",
+	ErrDuplicatingEmail:         "Client with this e-mail already exists",
 }
 
 var DescriptionRU = map[int]string{
@@ -111,6 +113,7 @@ var DescriptionRU = map[int]string{
 	ErrGiftCardNoFunds:          "На подарочной карте нет средств",
 	ErrGiftCardAlreadySold:      "Подарочная карта уже продана",
 	ErrGiftCardAlreadyActivated: "Подарочная карта уже активирована",
+	ErrDuplicatingEmail:         "Клиент с таким e-mail уже существует",
 }
 
 func Description(code int) string {
