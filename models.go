@@ -57,6 +57,7 @@ type GetBalanceQuery struct {
 type GetBalanceReply struct {
 	Client      GetBalanceReplyClient  `json:"client"`
 	Bonuses     []GetBalanceReplyBonus `json:"bonuses"`
+	Level       GetBalanceReplyLevel   `json:"level"`
 	WalletsLink string                 `json:"walletsLink,omitempty"`
 }
 
@@ -84,6 +85,14 @@ type GetBalanceReplyClient struct {
 type GetBalanceReplyBonus struct {
 	ExpireAt *time.Time `json:"expireAt,omitempty"`
 	Amount   int        `json:"amount"`
+}
+
+type GetBalanceReplyLevel struct {
+	Level           int              `json:"level"`
+	Name            string           `json:"name"`
+	LevelSpent      decimal.Decimal  `json:"levelSpent"`
+	Remaining       *decimal.Decimal `json:"remaining,omitempty"`
+	ProgressPercent *int             `json:"progressPercent,omitempty"`
 }
 
 type Child struct {
