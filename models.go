@@ -57,7 +57,7 @@ type GetBalanceQuery struct {
 type GetBalanceReply struct {
 	Client      GetBalanceReplyClient  `json:"client"`
 	Bonuses     []GetBalanceReplyBonus `json:"bonuses"`
-	Level       GetBalanceReplyLevel   `json:"level"`
+	Level       *GetBalanceReplyLevel  `json:"level,omitempty"`
 	WalletsLink string                 `json:"walletsLink,omitempty"`
 }
 
