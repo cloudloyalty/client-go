@@ -15,6 +15,16 @@ type ActivateGiftCardReply struct {
 	GiftCard GiftCardReply `json:"giftCard"`
 }
 
+// DiscardGiftCardRequest request model for discard-gift-card request
+type DiscardGiftCardRequest struct {
+	TxID     string        `json:"txid"`
+	GiftCard GiftCardQuery `json:"giftCard"`
+}
+
+// DiscardGiftCardReply response model for discard-gift-card request
+type DiscardGiftCardReply struct {
+}
+
 type GenerateGiftCardRequest struct {
 	Code string `json:"code"`
 }
