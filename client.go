@@ -51,6 +51,7 @@ type ClientInterface interface {
 	DiscardTicket(ctx context.Context, req *DiscardTicketRequest) (*DiscardTicketReply, error)
 	GetSettings(ctx context.Context, req *GetSettingsQuery) (*GetSettingsReply, error)
 	ActivateGiftCard(ctx context.Context, req *ActivateGiftCardRequest) (*ActivateGiftCardReply, error)
+	DiscardGiftCard(ctx context.Context, req *DiscardGiftCardRequest) (*DiscardGiftCardReply, error)
 	GenerateGiftCard(ctx context.Context, req *GenerateGiftCardRequest) (*GenerateGiftCardReply, error)
 }
 
@@ -392,6 +393,18 @@ func (c *Client) ActivateGiftCard(ctx context.Context, req *ActivateGiftCardRequ
 		return nil, err
 	}
 	var resp ActivateGiftCardReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) DiscardGiftCard(ctx context.Context, req *DiscardGiftCardRequest) (*DiscardGiftCardReply, error) {
+	respBody, err := c.request(ctx, "/discard-gift-card", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp DiscardGiftCardReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}
