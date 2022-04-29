@@ -28,6 +28,11 @@ type ProcessingError struct {
 	*ErrorReply
 }
 
+type TransportError struct {
+	error
+	HttpCode int
+}
+
 type ClientInterface interface {
 	GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBalanceReply, error)
 	NewClient(ctx context.Context, req *NewClientQuery) (*NewClientReply, error)
@@ -102,7 +107,7 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 		defer resp.Body.Close()
 	}
 	if err != nil {
-		return nil, err
+		return nil, &TransportError{error: err}
 	}
 
 	respBody, err := ioutil.ReadAll(resp.Body)
@@ -115,7 +120,10 @@ func (c *Client) request(ctx context.Context, path string, req interface{}) ([]b
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("http error code=%d", resp.StatusCode)
+		return nil, &TransportError{
+			error:    fmt.Errorf("http error code=%d", resp.StatusCode),
+			HttpCode: resp.StatusCode,
+		}
 	}
 
 	var serverError ErrorReply
