@@ -30,7 +30,7 @@ type ClientChangedEvent struct {
 
 type ClientEventClientQuery struct {
 	PhoneNumber string `json:"phoneNumber"`
-	Card        int    `json:"card"`
+	Card        string `json:"card"`
 	ExternalID  string `json:"externalId"`
 }
 
