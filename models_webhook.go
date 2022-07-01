@@ -49,6 +49,7 @@ type ClientChangedEventClientData struct {
 	IsEmailSubscribed bool        `json:"isEmailSubscribed"`
 	IsPhoneSubscribed bool        `json:"isPhoneSubscribed"`
 	ExtraFields       ExtraFields `json:"extraFields"`
+	IsDeleted         bool        `json:"isDeleted"`
 }
 
 type ClientBonusesChangedEvent struct {
