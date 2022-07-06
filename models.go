@@ -502,7 +502,7 @@ type SendConfirmationCodeReply struct {
 // get-history
 
 type GetHistoryQuery struct {
-	Client     ClientQuery
+	Client     ClientQuery      `json:"client"`
 	Pagination *PaginationQuery `json:"pagination,omitempty"`
 }
 
