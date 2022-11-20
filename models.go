@@ -184,7 +184,7 @@ type CalculatePurchaseQueryCalculate struct {
 	Promocode         string           `json:"promocode,omitempty"`
 	Units             map[string]Unit  `json:"units,omitempty"`
 	OrderID           string           `json:"orderId,omitempty"`
-	ExecutedAt        *time.Time       `json:"executedAt,omitempty"`
+	ExecutedAt        *ValidRangeTime  `json:"executedAt,omitempty"`
 	DoApplyBonuses    *bool            `json:"doApplyBonuses,omitempty"`   // obsolete
 	DoCollectBonuses  *bool            `json:"doCollectBonuses,omitempty"` // obsolete
 }
@@ -250,7 +250,7 @@ type ApplyPurchaseTransaction struct {
 	ExternalID                 string                             `json:"externalId,omitempty"`
 	IsAnonymousClient          bool                               `json:"isAnonymousClient,omitempty"`
 	ID                         string                             `json:"id"`
-	ExecutedAt                 time.Time                          `json:"executedAt"`
+	ExecutedAt                 ValidRangeTime                     `json:"executedAt"`
 	ReceiptID                  IntAsIntOrString                   `json:"receiptId,omitempty"`
 	SessionID                  IntAsIntOrString                   `json:"sessionId,omitempty"`
 	ShopCode                   string                             `json:"shopCode"`
@@ -354,7 +354,7 @@ type ApplyReturnTransaction struct {
 	ExternalID        string           `json:"externalId,omitempty"`
 	IsAnonymousClient bool             `json:"isAnonymousClient,omitempty"`
 	ID                string           `json:"id"`
-	ExecutedAt        time.Time        `json:"executedAt"`
+	ExecutedAt        ValidRangeTime   `json:"executedAt"`
 	PurchaseID        string           `json:"purchaseId"`
 	ReceiptID         IntAsIntOrString `json:"receiptId,omitempty"`
 	SessionID         IntAsIntOrString `json:"sessionId,omitempty"`
@@ -427,7 +427,7 @@ type SetOrderQuery struct {
 // deprecated
 type OrderQuery struct {
 	ID          string           `json:"id"`
-	ExecutedAt  *time.Time       `json:"executedAt,omitempty"`
+	ExecutedAt  *ValidRangeTime  `json:"executedAt,omitempty"`
 	ShopCode    string           `json:"shopCode"`
 	ShopName    string           `json:"shopName"`
 	TotalAmount decimal.Decimal  `json:"totalAmount"`
@@ -463,8 +463,8 @@ type SetOrderOperationResult struct {
 // confirm-order
 
 type ConfirmOrderQuery struct {
-	OrderID    string     `json:"orderId"`
-	ExecutedAt *time.Time `json:"executedAt,omitempty"`
+	OrderID    string          `json:"orderId"`
+	ExecutedAt *ValidRangeTime `json:"executedAt,omitempty"`
 }
 
 type ConfirmOrderReply struct {
@@ -475,8 +475,8 @@ type ConfirmOrderReply struct {
 // cancel-order
 
 type CancelOrderQuery struct {
-	OrderID    string     `json:"orderId"`
-	ExecutedAt *time.Time `json:"executedAt,omitempty"`
+	OrderID    string          `json:"orderId"`
+	ExecutedAt *ValidRangeTime `json:"executedAt,omitempty"`
 }
 
 type CancelOrderReply struct {

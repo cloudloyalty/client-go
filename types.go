@@ -2,8 +2,10 @@ package cloudloyalty_client
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type IntAsIntOrString int
@@ -56,4 +58,27 @@ func (i *IntOrAuto) MarshalJSON() ([]byte, error) {
 		return []byte("\"auto\""), nil
 	}
 	return []byte(strconv.Itoa(i.Value)), nil
+}
+
+type ValidRangeTime time.Time
+
+var (
+	TimeValidRangeStart = time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC)
+	TimeValidRangeEnd   = time.Date(2040, 1, 1, 0, 0, 0, 0, time.UTC).Add(-time.Second)
+)
+
+func (v *ValidRangeTime) UnmarshalJSON(b []byte) error {
+	t := time.Time(*v)
+	if err := t.UnmarshalJSON(b); err != nil {
+		return err
+	}
+	if t.Before(TimeValidRangeStart) || t.After(TimeValidRangeEnd) {
+		return fmt.Errorf(
+			"date %s is out of valid range (%s to %s)", t,
+			TimeValidRangeStart.Format(time.RFC3339),
+			TimeValidRangeEnd.Format(time.RFC3339),
+		)
+	}
+	*v = ValidRangeTime(t)
+	return nil
 }
