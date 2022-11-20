@@ -1,12 +1,14 @@
-CloudLoyalty Client
-===================
+MAXMA Client
+============
 
-Usage:
+Usage example:
 ```go
+package example
+
 import "github.com/cloudloyalty/client-go"
 
 client := cloudloyalty_client.New(&cloudloyalty_client.Config{
-    BaseURL:       config.CLBaseUrl,
+    BaseURL:       "https://api-test.maxma.com",
     ProcessingKey: "your key",
 })
 
@@ -21,4 +23,4 @@ if resp != nil {
 }
 ```
 
-See www.cloudloyalty.ru.
+See https://docs.maxma.com/api/
