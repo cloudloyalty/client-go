@@ -496,6 +496,7 @@ type SendConfirmationCodeQuery struct {
 type SendConfirmationCodeReply struct {
 	Code      string    `json:"code"`
 	MsgID     string    `json:"msgid"`
+	Channel   string    `json:"channel"`
 	ExpiresAt time.Time `json:"expiresAt"`
 }
 
