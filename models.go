@@ -532,7 +532,7 @@ type HistoryEntry struct {
 	OperationApplyReverted   *HistoryPurchaseEntry `json:"OPERATION_APPLY_REVERTED,omitempty"`
 	OperationCollectReverted *HistoryPurchaseEntry `json:"OPERATION_COLLECT_REVERTED,omitempty"`
 	OperationCollectedFriend *HistoryPurchaseEntry `json:"OPERATION_COLLECTED_FRIEND,omitempty"`
-	OperationOther           *struct{}             `json:"OPERATION_OTHER"`
+	OperationOther           *struct{}             `json:"OPERATION_OTHER,omitempty"`
 }
 
 type HistoryPurchaseEntry struct {
@@ -549,7 +549,7 @@ type HistoryReturnEntry struct {
 
 type HistoryReceiveEntry struct {
 	ActionName string `json:"actionName"`
-	Comment    string `json:"comment"`
+	Comment    string `json:"comment,omitempty"`
 }
 
 type PaginationReply struct {
