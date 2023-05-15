@@ -12,6 +12,7 @@ type V2CalculatePurchaseRequest struct {
 type SetPurchaseRequest struct {
 	TxID             string           `json:"txid"`
 	CalculationQuery CalculationQuery `json:"calculationQuery"`
+	ExtraFields      ExtraFields      `json:"extraFields,omitempty"`
 }
 
 type ConfirmTicketRequest struct {
