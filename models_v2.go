@@ -12,7 +12,6 @@ type V2CalculatePurchaseRequest struct {
 type SetPurchaseRequest struct {
 	TxID             string           `json:"txid"`
 	CalculationQuery CalculationQuery `json:"calculationQuery"`
-	ExtraFields      ExtraFields      `json:"extraFields,omitempty"`
 }
 
 type ConfirmTicketRequest struct {
@@ -47,6 +46,7 @@ type CalculationQuery struct {
 	CollectFactor     *decimal.Decimal      `json:"collectFactor,omitempty"`
 	Promocode         string                `json:"promocode,omitempty"`
 	DiscountRoundStep *float64              `json:"discountRoundStep,omitempty"`
+	ExtraFields       ExtraFields           `json:"extraFields,omitempty"`
 }
 
 type CalculationQueryRow struct {
