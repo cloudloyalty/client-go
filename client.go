@@ -431,6 +431,18 @@ func (c *Client) GenerateGiftCard(ctx context.Context, req *GenerateGiftCardRequ
 	return &resp, nil
 }
 
+func (c *Client) CalculateProducts(ctx context.Context, req *CalculateProductsRequest) (*CalculateProductsReply, error) {
+	respBody, err := c.request(ctx, "/calculate-products", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp CalculateProductsReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
 func eitherKeyValue(ctx context.Context, key string) string {
 	if ctx != nil {
 		if value, ok := ctx.Value(ContextValueXProcessingKey).(string); ok {
