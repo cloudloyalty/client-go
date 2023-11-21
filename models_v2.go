@@ -1,6 +1,8 @@
 package cloudloyalty_client
 
 import (
+	"time"
+
 	"github.com/shopspring/decimal"
 )
 
@@ -118,11 +120,13 @@ type CalculationResultRowBonuses struct {
 }
 
 type CalculationResultRowOffer struct {
-	ID      int             `json:"id"`
-	Code    string          `json:"code"`
-	Name    string          `json:"name"`
-	Bonuses int             `json:"bonuses,omitempty"`
-	Amount  decimal.Decimal `json:"amount,omitempty"`
+	ID          int             `json:"id"`
+	Code        string          `json:"code"`
+	Name        string          `json:"name"`
+	Bonuses     int             `json:"bonuses,omitempty"`
+	AvailableAt *time.Time      `json:"availableAt,omitempty"`
+	ExpireAt    *time.Time      `json:"expireAt,omitempty"`
+	Amount      decimal.Decimal `json:"amount,omitempty"`
 }
 
 type CalculationResultSummary struct {
