@@ -15,6 +15,7 @@ const (
 	ErrEmptyRowsArray           = 18
 	ErrIncorrectPhone           = 20
 	ErrPurchaseNotFound         = 21
+	ErrPurchaseDiscarded        = 22
 	ErrDuplicatingPhone         = 24
 	ErrDuplicatingCard          = 25
 	ErrTooManyCodeRequests      = 28
