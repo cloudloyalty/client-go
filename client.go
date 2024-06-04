@@ -37,6 +37,7 @@ type ClientInterface interface {
 	GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBalanceReply, error)
 	NewClient(ctx context.Context, req *NewClientQuery) (*NewClientReply, error)
 	UpdateClient(ctx context.Context, req *UpdateClientQuery) (*UpdateClientReply, error)
+	DeleteClient(ctx context.Context, req *DeleteClientQuery) (*DeleteClientReply, error)
 	CalculatePurchase(ctx context.Context, req *CalculatePurchaseQuery) (*CalculatePurchaseReply, error) // deprecated
 	ApplyPurchase(ctx context.Context, req *ApplyPurchaseQuery) (*ApplyPurchaseReply, error)             // deprecated
 	CalculateReturn(ctx context.Context, req *CalculateReturnQuery) (*CalculateReturnReply, error)
@@ -170,6 +171,18 @@ func (c *Client) UpdateClient(ctx context.Context, req *UpdateClientQuery) (*Upd
 		return nil, err
 	}
 	var resp UpdateClientReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) DeleteClient(ctx context.Context, req *DeleteClientQuery) (*DeleteClientReply, error) {
+	respBody, err := c.request(ctx, "/delete-client", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp DeleteClientReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}

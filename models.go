@@ -162,6 +162,17 @@ type UpdateClientReply struct {
 	WalletsLink string                 `json:"walletsLink,omitempty"`
 }
 
+// delete-client
+
+type DeleteClientQuery struct {
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	Card        string `json:"card,omitempty"`
+	ExternalID  string `json:"externalId,omitempty"`
+}
+
+type DeleteClientReply struct {
+}
+
 // calculate-purchase
 
 // deprecated
