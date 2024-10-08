@@ -489,8 +489,9 @@ type SendConfirmationCodeQuery struct {
 	PhoneNumber       string `json:"phoneNumber,omitempty"`
 	Card              string `json:"card,omitempty"`
 	ExternalID        string `json:"externalId,omitempty"`
-	IsAnonymousClient bool   `json:"isAnonymousClient"`
+	IsAnonymousClient bool   `json:"isAnonymousClient"` // deprecated
 	To                string `json:"to,omitempty"`
+	Template          string `json:"template,omitempty"`
 }
 
 type SendConfirmationCodeReply struct {
