@@ -3,6 +3,7 @@ package cloudloyalty_client
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -45,11 +46,16 @@ func (i *IntOrAuto) UnmarshalJSON(v []byte) error {
 		return nil
 	}
 	i.Auto = false
-	iv, err := strconv.Atoi(string(v))
+	// it is allowed for value to be a float with zero fractional part, e.g. 1.0
+	f, err := strconv.ParseFloat(string(v), 64)
 	if err != nil {
 		return err
 	}
-	i.Value = iv
+	iv, frac := math.Modf(f)
+	if frac != 0 {
+		return fmt.Errorf("unexpected fractional part in integer value: %f", f)
+	}
+	i.Value = int(iv)
 	return nil
 }
 
