@@ -36,7 +36,7 @@ type IntOrAuto struct {
 	json.Unmarshaler
 
 	Auto  bool
-	Value int
+	Value Int
 }
 
 func (i *IntOrAuto) UnmarshalJSON(v []byte) error {
@@ -46,6 +46,19 @@ func (i *IntOrAuto) UnmarshalJSON(v []byte) error {
 		return nil
 	}
 	i.Auto = false
+	return i.Value.UnmarshalJSON(v)
+}
+
+func (i *IntOrAuto) MarshalJSON() ([]byte, error) {
+	if i.Auto {
+		return []byte("\"auto\""), nil
+	}
+	return []byte(strconv.Itoa(int(i.Value))), nil
+}
+
+type Int int
+
+func (i *Int) UnmarshalJSON(v []byte) error {
 	// it is allowed for value to be a float with zero fractional part, e.g. 1.0
 	f, err := strconv.ParseFloat(string(v), 64)
 	if err != nil {
@@ -55,15 +68,8 @@ func (i *IntOrAuto) UnmarshalJSON(v []byte) error {
 	if frac != 0 {
 		return fmt.Errorf("unexpected fractional part in integer value: %f", f)
 	}
-	i.Value = int(iv)
+	*i = Int(iv)
 	return nil
-}
-
-func (i *IntOrAuto) MarshalJSON() ([]byte, error) {
-	if i.Auto {
-		return []byte("\"auto\""), nil
-	}
-	return []byte(strconv.Itoa(i.Value)), nil
 }
 
 type ValidRangeTime time.Time
