@@ -98,7 +98,7 @@ type GetBalanceReplyLevel struct {
 type Child struct {
 	Name      string `json:"name,omitempty"`
 	Birthdate string `json:"birthdate,omitempty"`
-	Gender    int    `json:"gender"`
+	Gender    Int    `json:"gender"`
 }
 
 // new-client
@@ -128,10 +128,10 @@ type NewClientClient struct {
 	Name              string      `json:"name,omitempty"`
 	PatronymicName    string      `json:"patronymicName,omitempty"`
 	FullName          string      `json:"fullName,omitempty"`
-	Gender            int         `json:"gender,omitempty"`
+	Gender            Int         `json:"gender,omitempty"`
 	Birthdate         string      `json:"birthdate,omitempty"`
 	Email             string      `json:"email,omitempty"`
-	Level             int         `json:"level,omitempty"`
+	Level             Int         `json:"level,omitempty"`
 	IsEmailSubscribed *bool       `json:"isEmailSubscribed,omitempty"`
 	IsPhoneSubscribed *bool       `json:"isPhoneSubscribed,omitempty"`
 	ExtraFields       ExtraFields `json:"extraFields,omitempty"`
@@ -410,8 +410,8 @@ type ClientQuery struct {
 }
 
 type BalanceAdjustmentQuery struct {
-	AmountDelta          int    `json:"amountDelta"`
-	ExpirationPeriodDays int    `json:"expirationPeriodDays,omitempty"`
+	AmountDelta          Int    `json:"amountDelta"`
+	ExpirationPeriodDays Int    `json:"expirationPeriodDays,omitempty"`
 	Comment              string `json:"comment,omitempty"`
 	Notify               bool   `json:"notify,omitempty"`
 }
@@ -520,8 +520,8 @@ type GetHistoryQuery struct {
 }
 
 type PaginationQuery struct {
-	Limit  int `json:"limit,omitempty"`
-	Offset int `json:"offset,omitempty"`
+	Limit  Int `json:"limit,omitempty"`
+	Offset Int `json:"offset,omitempty"`
 }
 
 type GetHistoryReply struct {
