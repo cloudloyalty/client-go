@@ -98,11 +98,12 @@ type CalculationResult struct {
 }
 
 type CalculationResultRow struct {
-	ID            *string                      `json:"id,omitempty"`
-	TotalDiscount decimal.Decimal              `json:"totalDiscount"`
-	Discounts     CalculationResultDiscounts   `json:"discounts"`
-	Bonuses       *CalculationResultRowBonuses `json:"bonuses,omitempty"`
-	Offers        []CalculationResultRowOffer  `json:"offers,omitempty"`
+	ID            *string                        `json:"id,omitempty"`
+	TotalDiscount decimal.Decimal                `json:"totalDiscount"`
+	Discounts     CalculationResultDiscounts     `json:"discounts"`
+	Bonuses       *CalculationResultRowBonuses   `json:"bonuses,omitempty"`
+	Offers        []CalculationResultRowOffer    `json:"offers,omitempty"`
+	Promocode     *CalculationResultRowPromocode `json:"promocode,omitempty"`
 }
 
 type CalculationResultDiscounts struct {
@@ -129,6 +130,14 @@ type CalculationResultRowOffer struct {
 	Amount      decimal.Decimal `json:"amount,omitempty"`
 }
 
+type CalculationResultRowPromocode struct {
+	Code        string          `json:"code"`
+	Bonuses     int             `json:"bonuses,omitempty"`
+	AvailableAt *time.Time      `json:"availableAt,omitempty"`
+	ExpireAt    *time.Time      `json:"expireAt,omitempty"`
+	Amount      decimal.Decimal `json:"amount,omitempty"`
+}
+
 type CalculationResultSummary struct {
 	TotalDiscount decimal.Decimal            `json:"totalDiscount"`
 	Discounts     CalculationResultDiscounts `json:"discounts"`
@@ -143,6 +152,7 @@ type CalculationResultBonuses struct {
 
 type CalculationResultPromocode struct {
 	Applied bool                    `json:"applied"`
+	Name    string                  `json:"name,omitempty"`
 	Error   *CalculationResultError `json:"error,omitempty"`
 }
 
