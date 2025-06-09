@@ -49,6 +49,7 @@ type CalculationQuery struct {
 	Promocode         string                `json:"promocode,omitempty"`
 	DiscountRoundStep *float64              `json:"discountRoundStep,omitempty"`
 	ExtraFields       ExtraFields           `json:"extraFields,omitempty"`
+	GiftCards         []string              `json:"giftCards,omitempty"`
 }
 
 type CalculationQueryRow struct {
@@ -95,6 +96,14 @@ type CalculationResult struct {
 	Bonuses   *CalculationResultBonuses   `json:"bonuses,omitempty"`
 	Promocode *CalculationResultPromocode `json:"promocode,omitempty"`
 	GiftCard  *CalculationResultPromocode `json:"giftCard,omitempty"`
+	GiftCards []CalculationResultGiftCard `json:"giftCards,omitempty"`
+}
+
+type CalculationResultGiftCard struct {
+	Code       string                  `json:"code"`
+	Status     string                  `json:"status"`
+	UsedAmount decimal.Decimal         `json:"usedAmount"`
+	Error      *CalculationResultError `json:"error,omitempty"`
 }
 
 type CalculationResultRow struct {
@@ -141,6 +150,7 @@ type CalculationResultRowPromocode struct {
 type CalculationResultSummary struct {
 	TotalDiscount decimal.Decimal            `json:"totalDiscount"`
 	Discounts     CalculationResultDiscounts `json:"discounts"`
+	PrepaidAmount decimal.Decimal            `json:"prepaidAmount"`
 }
 
 type CalculationResultBonuses struct {

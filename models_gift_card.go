@@ -44,3 +44,24 @@ type GiftCardReply struct {
 	InitAmount decimal.Decimal `json:"initAmount"`
 	ValidUntil *time.Time      `json:"validUntil,omitempty"`
 }
+
+type GiftCardInfoReply struct {
+	Number      string          `json:"number"`
+	InitAmount  decimal.Decimal `json:"initAmount"`
+	Balance     decimal.Decimal `json:"balance"`
+	Status      string          `json:"status"`
+	ActivatedAt *time.Time      `json:"activatedAt,omitempty"`
+	BlockedAt   *time.Time      `json:"blockedAt,omitempty"`
+	ValidFrom   *time.Time      `json:"validFrom,omitempty"`
+	ValidUntil  *time.Time      `json:"validUntil,omitempty"`
+}
+
+type GiftCardStatus string
+
+const (
+	GiftCardStatusInactive GiftCardStatus = "INACTIVE"
+	GiftCardStatusActive   GiftCardStatus = "ACTIVE"
+	GiftCardStatusRedeemed GiftCardStatus = "REDEEMED"
+	GiftCardStatusExpired  GiftCardStatus = "EXPIRED"
+	GiftCardStatusBlocked  GiftCardStatus = "BLOCKED"
+)
