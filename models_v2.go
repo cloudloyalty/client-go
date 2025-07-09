@@ -101,6 +101,7 @@ type CalculationResult struct {
 
 type CalculationResultGiftCard struct {
 	Code       string                  `json:"code"`
+	InstanceID int                     `json:"instanceId"`
 	Status     string                  `json:"status"`
 	UsedAmount decimal.Decimal         `json:"usedAmount"`
 	Error      *CalculationResultError `json:"error,omitempty"`
