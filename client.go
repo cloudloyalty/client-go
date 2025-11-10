@@ -48,7 +48,7 @@ type ClientInterface interface {
 	CancelOrder(ctx context.Context, req *CancelOrderQuery) (*CancelOrderReply, error)
 	AdjustBalance(ctx context.Context, req *AdjustBalanceQuery) (*AdjustBalanceReply, error)
 	SendConfirmationCode(ctx context.Context, req *SendConfirmationCodeQuery) (*SendConfirmationCodeReply, error)
-	GetHistory(ctx context.Context, req *GetHistoryQuery) (*GetHistoryReply, error)
+	GetHistory(ctx context.Context, req *GetBonusHistoryQuery) (*GetBonusHistoryReply, error)
 	IssuePromocode(ctx context.Context, req *IssuePromocodeQuery) (*IssuePromocodeReply, error)
 	RevertPurchase(ctx context.Context, req *RevertPurchaseQuery) (*RevertPurchaseReply, error)
 	V2CalculatePurchase(ctx context.Context, req *V2CalculatePurchaseRequest) (*V2CalculatePurchaseReply, error)
@@ -312,12 +312,24 @@ func (c *Client) SendConfirmationCode(ctx context.Context, req *SendConfirmation
 	return &resp, nil
 }
 
-func (c *Client) GetHistory(ctx context.Context, req *GetHistoryQuery) (*GetHistoryReply, error) {
-	respBody, err := c.request(ctx, "/get-history", req)
+func (c *Client) GetBonusHistory(ctx context.Context, req *GetBonusHistoryQuery) (*GetBonusHistoryReply, error) {
+	respBody, err := c.request(ctx, "/get-bonus-history", req)
 	if err != nil {
 		return nil, err
 	}
-	var resp GetHistoryReply
+	var resp GetBonusHistoryReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) GetPurchaseHistory(ctx context.Context, req *GetPurchaseHistoryQuery) (*GetPurchaseHistoryReply, error) {
+	respBody, err := c.request(ctx, "/get-purchase-history", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp GetPurchaseHistoryReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}

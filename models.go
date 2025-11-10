@@ -512,9 +512,9 @@ type SendConfirmationCodeReply struct {
 	ExpiresAt time.Time `json:"expiresAt"`
 }
 
-// get-history
+// get-bonus-history
 
-type GetHistoryQuery struct {
+type GetBonusHistoryQuery struct {
 	Client     ClientQuery      `json:"client"`
 	Pagination *PaginationQuery `json:"pagination,omitempty"`
 }
@@ -524,12 +524,12 @@ type PaginationQuery struct {
 	Offset Int `json:"offset,omitempty"`
 }
 
-type GetHistoryReply struct {
-	History    []HistoryEntry  `json:"history"`
-	Pagination PaginationReply `json:"pagination"`
+type GetBonusHistoryReply struct {
+	History    []BonusHistoryEntry `json:"history"`
+	Pagination PaginationReply     `json:"pagination"`
 }
 
-type HistoryEntry struct {
+type BonusHistoryEntry struct {
 	At                       time.Time             `json:"at"`
 	Amount                   int                   `json:"amount"`
 	Operation                string                `json:"operation"`
@@ -566,6 +566,45 @@ type HistoryReceiveEntry struct {
 
 type PaginationReply struct {
 	Total int `json:"total"`
+}
+
+// get-purchase-history
+
+type GetPurchaseHistoryQuery struct {
+	Client     ClientQuery      `json:"client"`
+	Pagination *PaginationQuery `json:"pagination,omitempty"`
+}
+
+type GetPurchaseHistoryReply struct {
+	History    []PurchaseHistoryPurchase `json:"history"`
+	Pagination PaginationReply           `json:"pagination"`
+}
+
+type PurchaseHistoryPurchase struct {
+	Shop          ShopQuery                  `json:"shop"`
+	Cashier       *CashierQuery              `json:"cashier,omitempty"`
+	OrderID       string                     `json:"orderId,omitempty"`
+	OrderStatus   string                     `json:"orderStatus,omitempty"`
+	TxID          string                     `json:"txid"`
+	ExecutedAt    time.Time                  `json:"executedAt"`
+	TotalAmount   decimal.Decimal            `json:"totalAmount"`
+	TotalDiscount decimal.Decimal            `json:"totalDiscount"`
+	Discounts     CalculationResultDiscounts `json:"discounts"`
+	Bonuses       *PurchaseBonuses           `json:"bonuses,omitempty"`
+	Promocode     string                     `json:"promocode,omitempty"`
+	GiftCards     []PurchaseGiftCard         `json:"giftCards,omitempty"`
+	PrepaidAmount decimal.Decimal            `json:"prepaidAmount,omitempty"`
+	ExtraFields   ExtraFields                `json:"extraFields,omitempty"`
+}
+
+type PurchaseGiftCard struct {
+	Code       string          `json:"code"`
+	UsedAmount decimal.Decimal `json:"usedAmount"`
+}
+
+type PurchaseBonuses struct {
+	Applied   int `json:"applied"`
+	Collected int `json:"collected"`
 }
 
 // issue-promocode

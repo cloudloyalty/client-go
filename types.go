@@ -30,7 +30,7 @@ func (i *IntAsIntOrString) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-type ExtraFields map[string]interface{}
+type ExtraFields map[string]any
 
 type IntOrAuto struct {
 	json.Unmarshaler
