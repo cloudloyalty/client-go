@@ -592,6 +592,7 @@ type PurchaseHistoryPurchase struct {
 	Discounts     CalculationResultDiscounts `json:"discounts"`
 	Bonuses       *PurchaseBonuses           `json:"bonuses,omitempty"`
 	Promocode     string                     `json:"promocode,omitempty"`
+	Rows          []PurchaseRow              `json:"rows,omitempty"`
 	GiftCards     []PurchaseGiftCard         `json:"giftCards,omitempty"`
 	PrepaidAmount decimal.Decimal            `json:"prepaidAmount,omitempty"`
 	ExtraFields   ExtraFields                `json:"extraFields,omitempty"`
@@ -605,6 +606,19 @@ type PurchaseGiftCard struct {
 type PurchaseBonuses struct {
 	Applied   int `json:"applied"`
 	Collected int `json:"collected"`
+}
+
+type PurchaseRow struct {
+	ExternalId    string                     `json:"externalId,omitempty"`
+	Title         string                     `json:"title,omitempty"`
+	SKU           string                     `json:"sku"`
+	Qty           float64                    `json:"qty"`
+	Price         decimal.Decimal            `json:"price"`
+	BuyingPrice   decimal.Decimal            `json:"buyingPrice,omitempty"`
+	TotalAmount   decimal.Decimal            `json:"totalAmount"`
+	TotalDiscount decimal.Decimal            `json:"totalDiscount"`
+	Discounts     CalculationResultDiscounts `json:"discounts"`
+	Bonuses       *PurchaseBonuses           `json:"bonuses,omitempty"`
 }
 
 // issue-promocode
