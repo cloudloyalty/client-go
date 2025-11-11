@@ -587,15 +587,18 @@ type PurchaseHistoryPurchase struct {
 	OrderStatus   string                     `json:"orderStatus,omitempty"`
 	TxID          string                     `json:"txid"`
 	ExecutedAt    time.Time                  `json:"executedAt"`
+	SessionID     string                     `json:"sessionId,omitempty"`
+	ReceiptID     string                     `json:"receiptId,omitempty"`
 	TotalAmount   decimal.Decimal            `json:"totalAmount"`
 	TotalDiscount decimal.Decimal            `json:"totalDiscount"`
+	PaidAmount    decimal.Decimal            `json:"paidAmount"`
 	Discounts     CalculationResultDiscounts `json:"discounts"`
 	Bonuses       *PurchaseBonuses           `json:"bonuses,omitempty"`
 	Promocode     string                     `json:"promocode,omitempty"`
 	Rows          []PurchaseRow              `json:"rows,omitempty"`
 	GiftCards     []PurchaseGiftCard         `json:"giftCards,omitempty"`
 	PrepaidAmount decimal.Decimal            `json:"prepaidAmount,omitempty"`
-	ExtraFields   ExtraFields                `json:"extraFields,omitempty"`
+	ExtraFields   ExtraFields                `json:"extraFields,omitempty"` // not yet implemented
 }
 
 type PurchaseGiftCard struct {
@@ -614,9 +617,10 @@ type PurchaseRow struct {
 	SKU           string                     `json:"sku"`
 	Qty           float64                    `json:"qty"`
 	Price         decimal.Decimal            `json:"price"`
-	BuyingPrice   decimal.Decimal            `json:"buyingPrice,omitempty"`
+	BuyingPrice   *decimal.Decimal           `json:"buyingPrice,omitempty"`
 	TotalAmount   decimal.Decimal            `json:"totalAmount"`
 	TotalDiscount decimal.Decimal            `json:"totalDiscount"`
+	PaidAmount    decimal.Decimal            `json:"paidAmount"`
 	Discounts     CalculationResultDiscounts `json:"discounts"`
 	Bonuses       *PurchaseBonuses           `json:"bonuses,omitempty"`
 }
