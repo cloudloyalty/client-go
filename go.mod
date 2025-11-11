@@ -1,5 +1,5 @@
 module github.com/cloudloyalty/client-go
 
-go 1.12
+go 1.18
 
-require github.com/shopspring/decimal v1.2.0
+require github.com/shopspring/decimal v1.4.0
