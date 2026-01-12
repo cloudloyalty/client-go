@@ -30,8 +30,9 @@ type DiscardGiftCardReply struct {
 }
 
 type GenerateGiftCardRequest struct {
-	Code string `json:"code"` // deprecated
-	Kind string `json:"kind"`
+	Code   string           `json:"code"` // deprecated
+	Kind   string           `json:"kind"`
+	Amount *decimal.Decimal `json:"amount,omitempty"`
 }
 
 type GenerateGiftCardReply struct {
