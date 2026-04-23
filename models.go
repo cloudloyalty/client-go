@@ -495,6 +495,33 @@ type CancelOrderReply struct {
 	ClientBonuses   ClientBonusesReply      `json:"clientBonuses"`
 }
 
+// cancel-order-items
+
+type CancelOrderItemsQuery struct {
+	OrderID        string                 `json:"orderId"`
+	ExecutedAt     *ValidRangeTime        `json:"executedAt,omitempty"`
+	CancelledItems []CancelOrderItemsItem `json:"cancelledItems"`
+}
+
+type CancelOrderItemsItem struct {
+	RowID string   `json:"rowId"`
+	Qty   *float64 `json:"qty,omitempty"`
+}
+
+type CancelOrderItemsReply struct {
+	OperationResult CancelOrderItemsOperationResult `json:"operationResult"`
+	ClientBonuses   ClientBonusesReply              `json:"clientBonuses"`
+}
+
+type CancelOrderItemsOperationResult struct {
+	RemainingAmount  decimal.Decimal            `json:"remainingAmount"`
+	AppliedBonuses   int                        `json:"appliedBonuses"`
+	CollectedBonuses int                        `json:"collectedBonuses"`
+	TotalDiscount    decimal.Decimal            `json:"totalDiscount"`
+	Discounts        CalculationResultDiscounts `json:"discounts"`
+	PrepaidAmount    decimal.Decimal            `json:"prepaidAmount"`
+}
+
 // send-confirmation-code
 type SendConfirmationCodeQuery struct {
 	PhoneNumber       string `json:"phoneNumber,omitempty"`
