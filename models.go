@@ -95,6 +95,24 @@ type GetBalanceReplyLevel struct {
 	ProgressPercent *int             `json:"progressPercent,omitempty"`
 }
 
+// get-client-offers
+
+type GetClientOffersQuery struct {
+	Client ClientQuery `json:"client"`
+}
+
+type GetClientOffersReply struct {
+	Counters []GetClientOffersReplyCounter `json:"counters"`
+}
+
+type GetClientOffersReplyCounter struct {
+	Name        string     `json:"name"`
+	Value       int        `json:"value"`
+	TargetValue int        `json:"targetValue"`
+	TargetDate  *time.Time `json:"targetDate"`
+	Coupons     int        `json:"coupons"`
+}
+
 type Child struct {
 	Name      string `json:"name,omitempty"`
 	Birthdate string `json:"birthdate,omitempty"`
