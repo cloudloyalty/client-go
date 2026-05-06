@@ -35,6 +35,7 @@ type TransportError struct {
 
 type ClientInterface interface {
 	GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBalanceReply, error)
+	GetClientOffers(ctx context.Context, req *GetClientOffersQuery) (*GetClientOffersReply, error)
 	NewClient(ctx context.Context, req *NewClientQuery) (*NewClientReply, error)
 	UpdateClient(ctx context.Context, req *UpdateClientQuery) (*UpdateClientReply, error)
 	DeleteClient(ctx context.Context, req *DeleteClientQuery) (*DeleteClientReply, error)
@@ -147,6 +148,18 @@ func (c *Client) GetBalance(ctx context.Context, req *GetBalanceQuery) (*GetBala
 		return nil, err
 	}
 	var resp GetBalanceReply
+	if err = json.Unmarshal(respBody, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+func (c *Client) GetClientOffers(ctx context.Context, req *GetClientOffersQuery) (*GetClientOffersReply, error) {
+	respBody, err := c.request(ctx, "/get-client-offers", req)
+	if err != nil {
+		return nil, err
+	}
+	var resp GetClientOffersReply
 	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return nil, err
 	}
