@@ -109,7 +109,7 @@ type GetClientOffersReplyCounter struct {
 	Name        string     `json:"name"`
 	Value       int        `json:"value"`
 	TargetValue int        `json:"targetValue"`
-	TargetDate  *time.Time `json:"targetDate"`
+	TargetDate  *time.Time `json:"targetDate,omitempty"`
 	Coupons     int        `json:"coupons"`
 }
 
