@@ -40,6 +40,12 @@ const (
 	ReceiptInfoLineBarcodeTypeEAN13 = "EAN13"
 )
 
+const (
+	PromocodeCodeTypeShared   = "shared"
+	PromocodeCodeTypePersonal = "personal"
+	PromocodeCodeTypeFriend   = "friend"
+)
+
 type ErrorReply struct {
 	ErrorCode   int    `json:"errorCode"`
 	Description string `json:"description"`
@@ -102,7 +108,9 @@ type GetClientOffersQuery struct {
 }
 
 type GetClientOffersReply struct {
-	Counters []GetClientOffersReplyCounter `json:"counters"`
+	Counters   []GetClientOffersReplyCounter   `json:"counters"`
+	Offers     []GetClientOffersReplyOffer     `json:"offers"`
+	Promocodes []GetClientOffersReplyPromocode `json:"promocodes"`
 }
 
 type GetClientOffersReplyCounter struct {
@@ -111,6 +119,44 @@ type GetClientOffersReplyCounter struct {
 	TargetValue int        `json:"targetValue"`
 	TargetDate  *time.Time `json:"targetDate,omitempty"`
 	Coupons     int        `json:"coupons"`
+}
+
+type GetClientOffersReplyOffer struct {
+	Title            string               `json:"title"`
+	Description      string               `json:"description,omitempty"`
+	Benefit          string               `json:"benefit"`
+	AvailableFrom    *time.Time           `json:"availableFrom,omitempty"`
+	AvailableTo      *time.Time           `json:"availableTo,omitempty"`
+	DiscountAmount   *decimal.Decimal     `json:"discountAmount,omitempty"`
+	DiscountPercent  *decimal.Decimal     `json:"discountPercent,omitempty"`
+	Bonuses          *int                 `json:"bonuses,omitempty"`
+	BonusPercent     *decimal.Decimal     `json:"bonusPercent,omitempty"`
+	BonusAvailableAt *time.Time           `json:"bonusAvailableAt,omitempty"`
+	BonusExpireAt    *time.Time           `json:"bonusExpireAt,omitempty"`
+	FixedPrice       *decimal.Decimal     `json:"fixedPrice,omitempty"`
+	GrowingDiscount  []GrowingDiscountRow `json:"growingDiscount,omitempty"`
+}
+
+type GetClientOffersReplyPromocode struct {
+	Title            string           `json:"title"`
+	Description      string           `json:"description,omitempty"`
+	Promocode        string           `json:"promocode"`
+	Benefit          string           `json:"benefit"`
+	CodeType         string           `json:"codeType"`
+	AvailableFrom    *time.Time       `json:"availableFrom,omitempty"`
+	AvailableTo      *time.Time       `json:"availableTo,omitempty"`
+	DiscountAmount   *decimal.Decimal `json:"discountAmount,omitempty"`
+	DiscountPercent  *decimal.Decimal `json:"discountPercent,omitempty"`
+	Bonuses          *int             `json:"bonuses,omitempty"`
+	BonusPercent     *decimal.Decimal `json:"bonusPercent,omitempty"`
+	BonusAvailableAt *time.Time       `json:"bonusAvailableAt,omitempty"`
+	BonusExpireAt    *time.Time       `json:"bonusExpireAt,omitempty"`
+}
+
+type GrowingDiscountRow struct {
+	To              *int             `json:"to"`
+	DiscountAmount  *decimal.Decimal `json:"discountAmount,omitempty"`
+	DiscountPercent *decimal.Decimal `json:"discountPercent,omitempty"`
 }
 
 type Child struct {
