@@ -44,6 +44,10 @@ const (
 	PromocodeCodeTypeShared   = "shared"
 	PromocodeCodeTypePersonal = "personal"
 	PromocodeCodeTypeFriend   = "friend"
+
+	PromocodeApplyOnAnyPurchase   = "any"
+	PromocodeApplyOnFirstPurchase = "first"
+	PromocodeApplyOnOnePurchase   = "one"
 )
 
 type ErrorReply struct {
@@ -117,6 +121,7 @@ type GetClientOffersReply struct {
 	Counters   []GetClientOffersReplyCounter   `json:"counters"`
 	Offers     []GetClientOffersReplyOffer     `json:"offers"`
 	Promocodes []GetClientOffersReplyPromocode `json:"promocodes"`
+	Referral   []GetClientOffersReplyReferral  `json:"referral"`
 }
 
 type GetClientOffersReplyCounter struct {
@@ -149,6 +154,26 @@ type GetClientOffersReplyPromocode struct {
 	Promocode        string           `json:"promocode"`
 	Benefit          string           `json:"benefit"`
 	CodeType         string           `json:"codeType"`
+	AvailableFrom    *time.Time       `json:"availableFrom,omitempty"`
+	AvailableTo      *time.Time       `json:"availableTo,omitempty"`
+	DiscountAmount   *decimal.Decimal `json:"discountAmount,omitempty"`
+	DiscountPercent  *decimal.Decimal `json:"discountPercent,omitempty"`
+	Bonuses          *int             `json:"bonuses,omitempty"`
+	BonusPercent     *decimal.Decimal `json:"bonusPercent,omitempty"`
+	BonusAvailableAt *time.Time       `json:"bonusAvailableAt,omitempty"`
+	BonusExpireAt    *time.Time       `json:"bonusExpireAt,omitempty"`
+}
+
+type GetClientOffersReplyReferral struct {
+	Title            string           `json:"title"`
+	Description      string           `json:"description,omitempty"`
+	Promocode        *string          `json:"promocode,omitempty"`
+	Link             *string          `json:"link,omitempty"`
+	ApplyingMode     string           `json:"applyingMode"`
+	RewardOn         string           `json:"rewardOn"`
+	RewardBonus      *int             `json:"rewardBonus,omitempty"`
+	RewardPercent    *decimal.Decimal `json:"rewardPercent,omitempty"`
+	Benefit          string           `json:"benefit"`
 	AvailableFrom    *time.Time       `json:"availableFrom,omitempty"`
 	AvailableTo      *time.Time       `json:"availableTo,omitempty"`
 	DiscountAmount   *decimal.Decimal `json:"discountAmount,omitempty"`
